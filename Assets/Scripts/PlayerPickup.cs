@@ -101,11 +101,14 @@ public class PlayerPickup : MonoBehaviour
         if (item == null || holdPoint == null) return null;
 
         GameObject source = item.heldVisualPrefab != null ? item.heldVisualPrefab : item.gameObject;
+        Vector3 originalWorldScale = item.transform.lossyScale;
         GameObject clone = Instantiate(source);
         clone.transform.SetParent(holdPoint, false);
         clone.transform.localPosition = Vector3.zero;
         clone.transform.localRotation = Quaternion.identity;
-        clone.transform.localScale = item.heldVisualScale != Vector3.zero ? item.heldVisualScale : source.transform.localScale;
+        clone.transform.localScale = item.overrideHeldVisualScale
+            ? item.heldVisualScale
+            : GetLocalScaleForWorldScale(originalWorldScale, holdPoint.lossyScale);
 
         foreach (var col in clone.GetComponentsInChildren<Collider>())
         {
@@ -123,6 +126,15 @@ public class PlayerPickup : MonoBehaviour
         }
 
         return clone;
+    }
+
+    Vector3 GetLocalScaleForWorldScale(Vector3 worldScale, Vector3 parentWorldScale)
+    {
+        return new Vector3(
+            parentWorldScale.x != 0f ? worldScale.x / parentWorldScale.x : worldScale.x,
+            parentWorldScale.y != 0f ? worldScale.y / parentWorldScale.y : worldScale.y,
+            parentWorldScale.z != 0f ? worldScale.z / parentWorldScale.z : worldScale.z
+        );
     }
 }
 

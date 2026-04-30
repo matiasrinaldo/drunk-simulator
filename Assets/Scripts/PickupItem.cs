@@ -16,7 +16,8 @@ public class PickupItem : MonoBehaviour
     [Header("Optional")]
     public AudioClip pickupSfx;
     public GameObject heldVisualPrefab;
-    public Vector3 heldVisualScale = new Vector3(0.2f, 0.2f, 0.2f);
+    public bool overrideHeldVisualScale;
+    public Vector3 heldVisualScale = Vector3.zero;
     public Color highlightColor = new Color(1f, 0.94f, 0.5f, 1f);
 
     Renderer[] renderers;
