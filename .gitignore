@@ -5,10 +5,15 @@ Build/
 Builds/
 Logs/
 UserSettings/
+.plastic/
+.codex/
+codex/
+.agents/
 
 *.csproj
 *.unityproj
 *.sln
+*.slnx
 *.user
 *.userprefs
 *.pidb
@@ -18,3 +23,4 @@ UserSettings/
 
 .DS_Store
 .vscode/
+ignore.conf

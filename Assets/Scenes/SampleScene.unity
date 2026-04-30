@@ -254,6 +254,7 @@ MonoBehaviour:
   itemName: Trago
   pickupSfx: {fileID: 0}
   heldVisualPrefab: {fileID: 0}
+  overrideHeldVisualScale: 0
   heldVisualScale: {x: 1, y: 1, z: 1}
   highlightColor: {r: 1, g: 0.94, b: 0.5, a: 1}
 --- !u!1 &64502053
@@ -2230,6 +2231,7 @@ MonoBehaviour:
   itemName: Trago
   pickupSfx: {fileID: 0}
   heldVisualPrefab: {fileID: 0}
+  overrideHeldVisualScale: 0
   heldVisualScale: {x: 1, y: 1, z: 1}
   highlightColor: {r: 1, g: 0.94, b: 0.5, a: 1}
 --- !u!1 &1179756853
@@ -3452,6 +3454,7 @@ MonoBehaviour:
   itemName: Trago
   pickupSfx: {fileID: 0}
   heldVisualPrefab: {fileID: 0}
+  overrideHeldVisualScale: 0
   heldVisualScale: {x: 1, y: 1, z: 1}
   highlightColor: {r: 1, g: 0.94, b: 0.5, a: 1}
 --- !u!1 &1617417683
@@ -4462,6 +4465,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Trago
       objectReference: {fileID: 0}
+    - target: {fileID: 5509305078529560405, guid: 037f2d65e4722d44090543140a2b1ed3, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5670705747237704371, guid: 037f2d65e4722d44090543140a2b1ed3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.968
@@ -4618,6 +4625,10 @@ PrefabInstance:
     - target: {fileID: 4339291064135971659, guid: 8f4b31757f36d6e42ab69f79bacb2bed, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6417150348124521678, guid: 8f4b31757f36d6e42ab69f79bacb2bed, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8598198527008966155, guid: 8f4b31757f36d6e42ab69f79bacb2bed, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
