@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float speed = 5f;
+    public float sprintMultiplier = 1.75f;
     public float gravity = -9.8f;
     public float yVelocity = 0f;
     public float jumpForce = 1f;
@@ -44,6 +45,12 @@ public class PlayerMovement : MonoBehaviour
             move.Normalize();
         }
 
+        float currentSpeed = speed;
+        if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
+        {
+            currentSpeed *= sprintMultiplier;
+        }
+
         move += transform.right * lateralSway;
 
         // gravedad
@@ -60,6 +67,6 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 velocity = new Vector3(0, yVelocity, 0);
 
-        controller.Move((move * speed + velocity) * Time.deltaTime);
+        controller.Move((move * currentSpeed + velocity) * Time.deltaTime);
     }
 }
