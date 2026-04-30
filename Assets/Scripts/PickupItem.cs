@@ -12,6 +12,7 @@ public class PickupItem : MonoBehaviour
     public PickupType pickupType = PickupType.Trago;
     public float alcoholValue = 10f;
     public string itemName = "Trago";
+    public bool infiniteSupply = true;
 
     [Header("Optional")]
     public AudioClip pickupSfx;
@@ -65,6 +66,9 @@ public class PickupItem : MonoBehaviour
             Destroy(audioSource, pickupSfx.length);
         }
 
-        Destroy(gameObject);
+        if (!infiniteSupply)
+        {
+            Destroy(gameObject);
+        }
     }
 }
