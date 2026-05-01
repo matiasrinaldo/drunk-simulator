@@ -23,4 +23,9 @@ codex/
 
 .DS_Store
 .vscode/
+.vsconfig
 ignore.conf
+
+#Docs
+*.txt
+*.md
