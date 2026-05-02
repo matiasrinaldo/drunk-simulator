@@ -5,10 +5,6 @@ Build/
 Builds/
 Logs/
 UserSettings/
-.plastic/
-.codex/
-codex/
-.agents/
 
 *.csproj
 *.unityproj
@@ -29,3 +25,11 @@ ignore.conf
 #Docs
 *.txt
 *.md
+
+#Agents
+.claude
+CLAUDE.md
+codex/
+.agents/
+.plastic/
+.codex/
