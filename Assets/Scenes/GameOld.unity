@@ -252,6 +252,7 @@ MonoBehaviour:
   pickupType: 0
   alcoholValue: 10
   itemName: Trago
+  infiniteSupply: 1
   pickupSfx: {fileID: 0}
   heldVisualPrefab: {fileID: 0}
   overrideHeldVisualScale: 0
@@ -2229,6 +2230,7 @@ MonoBehaviour:
   pickupType: 2
   alcoholValue: 10
   itemName: Trago
+  infiniteSupply: 1
   pickupSfx: {fileID: 0}
   heldVisualPrefab: {fileID: 0}
   overrideHeldVisualScale: 0
@@ -2437,6 +2439,19 @@ MonoBehaviour:
     m_Bits: 4294967291
   holdPoint: {fileID: 0}
   currentPickupItem: {fileID: 0}
+  showAimDot: 1
+  aimDotSize: 4
+  aimDotColor: {r: 1, g: 1, b: 1, a: 1}
+  drunkManager: {fileID: 0}
+  beerAlcoholAmount: 8
+  cocktailAlcoholAmount: 15
+  whiskyAlcoholAmount: 30
+  maxSipsPerDrink: 4
+  throwMouseButton: 1
+  minThrowForce: 4
+  maxThrowForce: 16
+  maxThrowChargeTime: 1.5
+  upwardThrowForce: 0
 --- !u!1001 &1214140527
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3452,6 +3467,7 @@ MonoBehaviour:
   pickupType: 1
   alcoholValue: 10
   itemName: Trago
+  infiniteSupply: 1
   pickupSfx: {fileID: 0}
   heldVisualPrefab: {fileID: 0}
   overrideHeldVisualScale: 0
