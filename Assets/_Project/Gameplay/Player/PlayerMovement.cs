@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
     {
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
-        float drunkAmount = drunkManager != null ? drunkManager.EffectIntensity : 0f;
+        float drunkAmount = drunkManager != null ? drunkManager.NormalizedLevel : 0f;
 
         float lateralSway = Mathf.Sin(Time.time * lateralSwayFrequency) * lateralSwayDistance * drunkAmount;
         float inputDrift = Mathf.Cos(Time.time * inputDriftFrequency) * inputDriftAmount * drunkAmount;
