@@ -1,35 +1,28 @@
+using System;
 using UnityEngine;
 
 public class DrunkManager : MonoBehaviour
 {
-    [Header("Alcohol")]
-    [SerializeField] float alcoholLevel = 0f;
-    [SerializeField] float maxAlcohol = 100f;
-    [SerializeField] float drinkAmount = 15f;
-    [SerializeField] float soberRate = 4f;
-    [SerializeField] float smoothingSpeed = 3f;
-    [SerializeField] float intensityExponent = 2.5f;
+    [Header("Config")]
+    [SerializeField] private int maxLevel = 8;
 
-    float smoothedAlcoholLevel = 0f;
+    public int AlcoholLevel { get; private set; } = 0;
+    public int MaxLevel => maxLevel;
 
-    public float AlcoholLevel => alcoholLevel;
-    public float NormalizedLevel => maxAlcohol <= 0f ? 0f : alcoholLevel / maxAlcohol;
-    public float SmoothedNormalizedLevel => maxAlcohol <= 0f ? 0f : smoothedAlcoholLevel / maxAlcohol;
-    public float EffectIntensity => Mathf.Pow(SmoothedNormalizedLevel, intensityExponent);
+    // 0-1 for scaling effects continuously across levels
+    public float NormalizedLevel => maxLevel > 0 ? (float)AlcoholLevel / maxLevel : 0f;
 
-    void Update()
+    public event Action<int> OnAlcoholLevelChanged;
+
+    public void AddBeer()
     {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            AddAlcohol(drinkAmount);
-        }
-
-        alcoholLevel = Mathf.MoveTowards(alcoholLevel, 0f, soberRate * Time.deltaTime);
-        smoothedAlcoholLevel = Mathf.Lerp(smoothedAlcoholLevel, alcoholLevel, smoothingSpeed * Time.deltaTime);
+        AlcoholLevel = Mathf.Min(AlcoholLevel + 1, maxLevel);
+        OnAlcoholLevelChanged?.Invoke(AlcoholLevel);
     }
 
-    public void AddAlcohol(float amount)
+    public void ResetLevel()
     {
-        alcoholLevel = Mathf.Clamp(alcoholLevel + amount, 0f, maxAlcohol);
+        AlcoholLevel = 0;
+        OnAlcoholLevelChanged?.Invoke(AlcoholLevel);
     }
 }
