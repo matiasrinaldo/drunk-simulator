@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public float lateralSwayFrequency = 1.4f;
     public float inputDriftAmount = 0.35f;
     public float inputDriftFrequency = 0.8f;
+    public float drunkSpeedPenalty = 0.25f;
 
     DrunkManager drunkManager;
 
@@ -31,9 +32,14 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (!CanMove())
+        {
+            return;
+        }
+
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
-        float drunkAmount = drunkManager != null ? drunkManager.NormalizedLevel : 0f;
+        float drunkAmount = drunkManager != null ? drunkManager.EffectIntensity : 0f;
 
         float lateralSway = Mathf.Sin(Time.time * lateralSwayFrequency) * lateralSwayDistance * drunkAmount;
         float inputDrift = Mathf.Cos(Time.time * inputDriftFrequency) * inputDriftAmount * drunkAmount;
@@ -50,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
         {
             currentSpeed *= sprintMultiplier;
         }
+        currentSpeed *= Mathf.Lerp(1f, 1f - drunkSpeedPenalty, drunkAmount);
 
         move += transform.right * lateralSway;
 
@@ -68,5 +75,15 @@ public class PlayerMovement : MonoBehaviour
         Vector3 velocity = new Vector3(0, yVelocity, 0);
 
         controller.Move((move * currentSpeed + velocity) * Time.deltaTime);
+    }
+
+    bool CanMove()
+    {
+        if (controller == null || controller.gameObject != gameObject)
+        {
+            controller = GetComponent<CharacterController>();
+        }
+
+        return controller != null && controller.enabled && controller.gameObject.activeInHierarchy && enabled && gameObject.activeInHierarchy;
     }
 }

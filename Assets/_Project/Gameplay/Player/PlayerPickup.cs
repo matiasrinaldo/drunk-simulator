@@ -1,6 +1,211 @@
 using UnityEngine;
 
-// Stub — se reescribe completo en Fase 3 (sistema de SellableItem)
 public class PlayerPickup : MonoBehaviour
 {
+    public KeyCode pickupKey = KeyCode.E;
+    public float selectionDistance = 3f;
+    public float proximityDistance = 1.5f;
+    public LayerMask pickupLayerMask = Physics.DefaultRaycastLayers;
+    public Transform holdPoint;
+
+    [Header("Aim Dot")]
+    public bool showAimDot = true;
+    public float aimDotSize = 4f;
+    public Color aimDotColor = Color.white;
+
+    Camera mainCamera;
+    DrunkManager drunkManager;
+    PickupItem currentPickupItem;
+    PickupItem lastHighlightedItem;
+    GameObject currentHeldVisual;
+    int heldAlcoholPerSip;
+    int heldMaxSips;
+    int heldSips;
+    bool hasHeldDrink;
+
+    void Awake()
+    {
+        mainCamera = Camera.main;
+        drunkManager = GetComponent<DrunkManager>();
+
+        if (drunkManager == null)
+        {
+            drunkManager = FindFirstObjectByType<DrunkManager>();
+        }
+
+        if (holdPoint == null)
+        {
+            Transform parent = mainCamera != null ? mainCamera.transform : transform;
+            GameObject holdPointObject = new GameObject("HoldPoint");
+            holdPointObject.transform.SetParent(parent);
+            holdPointObject.transform.localPosition = new Vector3(0.45f, -0.2f, 0.65f);
+            holdPointObject.transform.localRotation = Quaternion.Euler(8f, -18f, 0f);
+            holdPointObject.transform.localScale = Vector3.one;
+            holdPoint = holdPointObject.transform;
+        }
+    }
+
+    void Update()
+    {
+        UpdateSelectionByLook();
+
+        if (Input.GetKeyDown(pickupKey))
+        {
+            if (hasHeldDrink)
+            {
+                DrinkHeldItem();
+            }
+            else if (currentPickupItem != null)
+            {
+                Pickup(currentPickupItem);
+            }
+        }
+    }
+
+    void OnGUI()
+    {
+        if (!showAimDot) return;
+
+        float size = Mathf.Max(1f, aimDotSize);
+        Rect dotRect = new Rect(
+            (Screen.width - size) * 0.5f,
+            (Screen.height - size) * 0.5f,
+            size,
+            size
+        );
+
+        Color previousColor = GUI.color;
+        GUI.color = aimDotColor;
+        GUI.DrawTexture(dotRect, Texture2D.whiteTexture);
+        GUI.color = previousColor;
+    }
+
+    void UpdateSelectionByLook()
+    {
+        currentPickupItem = null;
+
+        if (mainCamera == null)
+        {
+            mainCamera = Camera.main;
+            if (mainCamera == null) return;
+        }
+
+        Ray ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
+        if (Physics.Raycast(ray, out RaycastHit hit, selectionDistance, pickupLayerMask, QueryTriggerInteraction.Collide))
+        {
+            currentPickupItem = hit.collider.GetComponentInParent<PickupItem>();
+        }
+
+        if (currentPickupItem == null)
+        {
+            currentPickupItem = FindClosestPickupInRange();
+        }
+
+        if (lastHighlightedItem != null && lastHighlightedItem != currentPickupItem)
+        {
+            lastHighlightedItem.SetHighlighted(false);
+            lastHighlightedItem = null;
+        }
+
+        if (currentPickupItem != null && lastHighlightedItem != currentPickupItem)
+        {
+            currentPickupItem.SetHighlighted(true);
+            lastHighlightedItem = currentPickupItem;
+        }
+    }
+
+    PickupItem FindClosestPickupInRange()
+    {
+        Collider[] hits = Physics.OverlapSphere(transform.position, proximityDistance, pickupLayerMask, QueryTriggerInteraction.Collide);
+        PickupItem closestItem = null;
+        float closestDistance = float.PositiveInfinity;
+
+        foreach (Collider hit in hits)
+        {
+            PickupItem item = hit.GetComponentInParent<PickupItem>();
+            if (item == null) continue;
+
+            float distance = Vector3.Distance(transform.position, item.transform.position);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestItem = item;
+            }
+        }
+
+        return closestItem;
+    }
+
+    void Pickup(PickupItem item)
+    {
+        if (item == null) return;
+
+        item.SetHighlighted(false);
+        Destroy(currentHeldVisual);
+        currentHeldVisual = CreateHeldVisual(item);
+        heldAlcoholPerSip = item.AlcoholPerSip;
+        heldMaxSips = Mathf.Max(1, item.maxSips);
+        heldSips = 0;
+        hasHeldDrink = currentHeldVisual != null;
+
+        item.OnPickedUp();
+        currentPickupItem = null;
+        lastHighlightedItem = null;
+    }
+
+    void DrinkHeldItem()
+    {
+        if (!hasHeldDrink) return;
+
+        if (drunkManager != null)
+        {
+            drunkManager.AddAlcohol(heldAlcoholPerSip);
+        }
+
+        heldSips++;
+        if (heldSips >= heldMaxSips)
+        {
+            Destroy(currentHeldVisual);
+            currentHeldVisual = null;
+            heldSips = 0;
+            hasHeldDrink = false;
+        }
+    }
+
+    GameObject CreateHeldVisual(PickupItem item)
+    {
+        if (item == null || holdPoint == null) return null;
+
+        GameObject source = item.heldVisualPrefab != null ? item.heldVisualPrefab : item.gameObject;
+        Vector3 originalWorldScale = item.transform.lossyScale;
+        GameObject clone = Instantiate(source);
+        clone.name = item.ResolvedPickupType.ToString();
+        clone.transform.SetParent(holdPoint, false);
+        clone.transform.localPosition = Vector3.zero;
+        clone.transform.localRotation = Quaternion.identity;
+        clone.transform.localScale = item.overrideHeldVisualScale
+            ? item.heldVisualScale
+            : GetLocalScaleForWorldScale(originalWorldScale, holdPoint.lossyScale);
+
+        foreach (Collider itemCollider in clone.GetComponentsInChildren<Collider>())
+        {
+            Destroy(itemCollider);
+        }
+
+        foreach (PickupItem pickupItem in clone.GetComponentsInChildren<PickupItem>())
+        {
+            Destroy(pickupItem);
+        }
+
+        return clone;
+    }
+
+    Vector3 GetLocalScaleForWorldScale(Vector3 worldScale, Vector3 parentWorldScale)
+    {
+        return new Vector3(
+            parentWorldScale.x != 0f ? worldScale.x / parentWorldScale.x : worldScale.x,
+            parentWorldScale.y != 0f ? worldScale.y / parentWorldScale.y : worldScale.y,
+            parentWorldScale.z != 0f ? worldScale.z / parentWorldScale.z : worldScale.z
+        );
+    }
 }

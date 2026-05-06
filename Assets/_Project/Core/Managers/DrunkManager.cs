@@ -4,25 +4,36 @@ using UnityEngine;
 public class DrunkManager : MonoBehaviour
 {
     [Header("Config")]
-    [SerializeField] private int maxLevel = 8;
+    [SerializeField] private int maxLevel = 24;
+    [SerializeField] private float effectExponent = 1.6f;
 
-    public int AlcoholLevel { get; private set; } = 0;
+    [Header("Runtime")]
+    [SerializeField] private int alcoholLevel = 0;
+
+    public int AlcoholLevel => alcoholLevel;
     public int MaxLevel => maxLevel;
 
-    // 0-1 for scaling effects continuously across levels
-    public float NormalizedLevel => maxLevel > 0 ? (float)AlcoholLevel / maxLevel : 0f;
+    public float NormalizedLevel => maxLevel > 0 ? (float)alcoholLevel / maxLevel : 0f;
+    public float EffectIntensity => Mathf.Pow(NormalizedLevel, effectExponent);
 
     public event Action<int> OnAlcoholLevelChanged;
 
+    public void AddAlcohol(int amount)
+    {
+        if (amount <= 0) return;
+
+        alcoholLevel = Mathf.Min(alcoholLevel + amount, maxLevel);
+        OnAlcoholLevelChanged?.Invoke(alcoholLevel);
+    }
+
     public void AddBeer()
     {
-        AlcoholLevel = Mathf.Min(AlcoholLevel + 1, maxLevel);
-        OnAlcoholLevelChanged?.Invoke(AlcoholLevel);
+        AddAlcohol(1);
     }
 
     public void ResetLevel()
     {
-        AlcoholLevel = 0;
-        OnAlcoholLevelChanged?.Invoke(AlcoholLevel);
+        alcoholLevel = 0;
+        OnAlcoholLevelChanged?.Invoke(alcoholLevel);
     }
 }
