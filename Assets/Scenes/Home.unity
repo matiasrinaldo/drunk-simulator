@@ -596,6 +596,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 442915283}
+  - component: {fileID: 442915285}
+  - component: {fileID: 442915284}
   m_Layer: 0
   m_Name: HomeDoorTrigger
   m_TagString: Untagged
@@ -612,12 +614,47 @@ Transform:
   m_GameObject: {fileID: 442915282}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.946, y: 0.154, z: -14.103}
+  m_LocalPosition: {x: -0.58, y: 0.154, z: -14.317}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &442915284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 442915282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c2dd38bce65e5a41a6745cff16c5d72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HomeDoorTrigger
+  sceneToLoad: City
+  playerTag: player
+--- !u!65 &442915285
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 442915282}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &454227832
 PrefabInstance:
   m_ObjectHideFlags: 0
