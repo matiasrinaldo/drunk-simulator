@@ -17,11 +17,21 @@ public class PlayerPickup : MonoBehaviour
     DrunkManager drunkManager;
     PickupItem currentPickupItem;
     PickupItem lastHighlightedItem;
+    CarryableObject currentCarryable;
+    CarryableObject lastHighlightedCarryable;
     GameObject currentHeldVisual;
     int heldAlcoholPerSip;
     int heldMaxSips;
     int heldSips;
     bool hasHeldDrink;
+    static bool hasHeldObject;
+
+    public bool HasHeldObject => hasHeldObject;
+
+    public void ConsumeHeldObject()
+    {
+        hasHeldObject = false;
+    }
 
     void Awake()
     {
@@ -55,9 +65,14 @@ public class PlayerPickup : MonoBehaviour
             {
                 DrinkHeldItem();
             }
-            else if (currentPickupItem != null)
+            else if (currentPickupItem != null && hasHeldObject)
             {
+                hasHeldObject = false;
                 Pickup(currentPickupItem);
+            }
+            else if (currentCarryable != null && !hasHeldObject)
+            {
+                PickupCarryable(currentCarryable);
             }
         }
     }
@@ -83,6 +98,7 @@ public class PlayerPickup : MonoBehaviour
     void UpdateSelectionByLook()
     {
         currentPickupItem = null;
+        currentCarryable = null;
 
         if (mainCamera == null)
         {
@@ -94,9 +110,13 @@ public class PlayerPickup : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, selectionDistance, pickupLayerMask, QueryTriggerInteraction.Collide))
         {
             currentPickupItem = hit.collider.GetComponentInParent<PickupItem>();
+            if (currentPickupItem == null)
+            {
+                currentCarryable = hit.collider.GetComponentInParent<CarryableObject>();
+            }
         }
 
-        if (currentPickupItem == null)
+        if (currentPickupItem == null && currentCarryable == null)
         {
             currentPickupItem = FindClosestPickupInRange();
         }
@@ -111,6 +131,18 @@ public class PlayerPickup : MonoBehaviour
         {
             currentPickupItem.SetHighlighted(true);
             lastHighlightedItem = currentPickupItem;
+        }
+
+        if (lastHighlightedCarryable != null && lastHighlightedCarryable != currentCarryable)
+        {
+            lastHighlightedCarryable.SetHighlighted(false);
+            lastHighlightedCarryable = null;
+        }
+
+        if (currentCarryable != null && lastHighlightedCarryable != currentCarryable)
+        {
+            currentCarryable.SetHighlighted(true);
+            lastHighlightedCarryable = currentCarryable;
         }
     }
 
@@ -134,6 +166,16 @@ public class PlayerPickup : MonoBehaviour
         }
 
         return closestItem;
+    }
+
+    void PickupCarryable(CarryableObject carryable)
+    {
+        if (carryable == null) return;
+
+        carryable.OnPickedUp();
+        hasHeldObject = true;
+        currentCarryable = null;
+        lastHighlightedCarryable = null;
     }
 
     void Pickup(PickupItem item)
