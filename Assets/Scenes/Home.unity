@@ -975,6 +975,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0dc59986e3f5b224b827116c525a11ff, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2076906104}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0dc59986e3f5b224b827116c525a11ff, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2076906108}
   m_SourcePrefab: {fileID: 100100000, guid: 0dc59986e3f5b224b827116c525a11ff, type: 3}
 --- !u!1001 &604037084
 PrefabInstance:
@@ -1310,6 +1313,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5853524716123971145, guid: 9687211a820e33a4a9cbed9747c63c42, type: 3}
+--- !u!114 &670416790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 670416785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 710bf97389a92ce43bbba2c80912ebfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CarryableObject
+  highlightColor: {r: 1, g: 0.9, b: 0.15, a: 1}
 --- !u!1 &680744438 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 28b6743ed3d94474c90818f791a6bd60, type: 3}
@@ -2267,6 +2283,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b7a4dc391eab055438640b0f2313b53b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 993272592}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b7a4dc391eab055438640b0f2313b53b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 993272596}
   m_SourcePrefab: {fileID: 100100000, guid: b7a4dc391eab055438640b0f2313b53b, type: 3}
 --- !u!1 &943062383 stripped
 GameObject:
@@ -2560,6 +2579,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6370315918150080950, guid: b7a4dc391eab055438640b0f2313b53b, type: 3}
+--- !u!114 &993272596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 993272591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 710bf97389a92ce43bbba2c80912ebfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CarryableObject
+  highlightColor: {r: 1, g: 0.9, b: 0.15, a: 1}
 --- !u!1 &997318417 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: dd0941d176d780641a90a884bfea1bc8, type: 3}
@@ -3365,6 +3397,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 26b8cff9071121b429408bb156f334ac, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1900553129}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 26b8cff9071121b429408bb156f334ac, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1900553133}
   m_SourcePrefab: {fileID: 100100000, guid: 26b8cff9071121b429408bb156f334ac, type: 3}
 --- !u!1 &1464515907
 GameObject:
@@ -4528,6 +4563,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9687211a820e33a4a9cbed9747c63c42, type: 3}
       insertIndex: -1
       addedObject: {fileID: 670416786}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9687211a820e33a4a9cbed9747c63c42, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 670416790}
   m_SourcePrefab: {fileID: 100100000, guid: 9687211a820e33a4a9cbed9747c63c42, type: 3}
 --- !u!1001 &1889696904
 PrefabInstance:
@@ -4628,6 +4666,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4055264921684322482, guid: 26b8cff9071121b429408bb156f334ac, type: 3}
+--- !u!114 &1900553133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900553128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 710bf97389a92ce43bbba2c80912ebfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CarryableObject
+  highlightColor: {r: 1, g: 0.9, b: 0.15, a: 1}
 --- !u!1 &1910875560 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 097f12d3485cfcc4ea448e29f3a2a281, type: 3}
@@ -4781,6 +4832,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -7960909975771927058, guid: 0dc59986e3f5b224b827116c525a11ff, type: 3}
+--- !u!114 &2076906108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2076906103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 710bf97389a92ce43bbba2c80912ebfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CarryableObject
+  highlightColor: {r: 1, g: 0.9, b: 0.15, a: 1}
 --- !u!1 &2078334976 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: cc85ba92b37059541916de24367170af, type: 3}

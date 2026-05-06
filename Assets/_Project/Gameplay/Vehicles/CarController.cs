@@ -17,10 +17,22 @@ public class CarController : MonoBehaviour
     [Tooltip("Offset local del centro de masa. Bajarlo evita que el auto se de vuelta facil.")]
     [SerializeField] private Vector3 centerOfMassOffset = new Vector3(0f, -0.5f, 0f);
 
+    [Header("Drunk Driving")]
+    [Tooltip("Drift agregado al steer (en unidades de input, -1..1) por la borrachera.")]
+    [SerializeField] private float drunkSteerDriftAmount = 0.55f;
+    [SerializeField] private float drunkSteerDriftFrequency = 0.7f;
+    [Tooltip("Drift agregado al acelerador por la borrachera.")]
+    [SerializeField] private float drunkThrottleDriftAmount = 0.2f;
+    [SerializeField] private float drunkThrottleDriftFrequency = 0.5f;
+    [Tooltip("Torque random para que el auto trompee cuando esta muy borracho.")]
+    [SerializeField] private float drunkYawJitterTorque = 800f;
+    [SerializeField] private float drunkYawJitterFrequency = 1.3f;
+
     private Rigidbody rb;
     private bool isControlled;
     private float throttleInput;
     private float steerInput;
+    private DrunkManager drunkManager;
 
     public float CurrentSpeed => rb != null ? rb.linearVelocity.magnitude : 0f;
     public bool IsControlled => isControlled;
@@ -29,6 +41,7 @@ public class CarController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.centerOfMass = centerOfMassOffset;
+        drunkManager = FindFirstObjectByType<DrunkManager>();
     }
 
     public void SetControlled(bool value)
@@ -58,15 +71,23 @@ public class CarController : MonoBehaviour
     {
         if (!isControlled) return;
 
+        float drunkAmount = drunkManager != null ? drunkManager.EffectIntensity : 0f;
+
+        float steerDrift = Mathf.Sin(Time.time * drunkSteerDriftFrequency) * drunkSteerDriftAmount * drunkAmount;
+        float throttleDrift = Mathf.Cos(Time.time * drunkThrottleDriftFrequency) * drunkThrottleDriftAmount * drunkAmount;
+
+        float effectiveSteer = Mathf.Clamp(steerInput + steerDrift, -1f, 1f);
+        float effectiveThrottle = Mathf.Clamp(throttleInput + throttleDrift, -1f, 1f);
+
         // Acelerar / frenar (reversa atenuada).
-        if (Mathf.Abs(throttleInput) > 0.01f && rb.linearVelocity.magnitude < maxSpeed)
+        if (Mathf.Abs(effectiveThrottle) > 0.01f && rb.linearVelocity.magnitude < maxSpeed)
         {
-            float force = throttleInput >= 0f ? thrust : thrust * reverseMultiplier;
-            rb.AddForce(transform.forward * (throttleInput * force), ForceMode.Force);
+            float force = effectiveThrottle >= 0f ? thrust : thrust * reverseMultiplier;
+            rb.AddForce(transform.forward * (effectiveThrottle * force), ForceMode.Force);
         }
 
         // Giro: seteamos angularVelocity directo cuando hay input. Sin input, el damping del Rigidbody atenua naturalmente.
-        if (Mathf.Abs(steerInput) > 0.01f)
+        if (Mathf.Abs(effectiveSteer) > 0.01f)
         {
             float speed = rb.linearVelocity.magnitude;
             float steerScale = Mathf.Clamp01(speed / steerSpeedThreshold);
@@ -74,8 +95,14 @@ public class CarController : MonoBehaviour
             float steerSign = forwardDot >= 0f ? 1f : -1f;
 
             Vector3 angVel = rb.angularVelocity;
-            angVel.y = steerInput * steerSpeed * steerScale * steerSign;
+            angVel.y = effectiveSteer * steerSpeed * steerScale * steerSign;
             rb.angularVelocity = angVel;
+        }
+
+        if (drunkAmount > 0f && drunkYawJitterTorque > 0f)
+        {
+            float jitter = Mathf.Sin(Time.time * drunkYawJitterFrequency * Mathf.PI * 2f) * drunkYawJitterTorque * drunkAmount;
+            rb.AddTorque(transform.up * jitter, ForceMode.Force);
         }
     }
 }

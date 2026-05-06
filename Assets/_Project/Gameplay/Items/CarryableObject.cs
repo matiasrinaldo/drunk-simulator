@@ -6,18 +6,23 @@ public class CarryableObject : MonoBehaviour
 
     Renderer[] renderers;
     MaterialPropertyBlock propertyBlock;
-    Color[] originalColors;
     bool isHighlighted;
 
     void Awake()
     {
         renderers = GetComponentsInChildren<Renderer>(includeInactive: true);
         propertyBlock = new MaterialPropertyBlock();
-        originalColors = new Color[renderers.Length];
 
         for (int i = 0; i < renderers.Length; i++)
         {
-            originalColors[i] = GetRendererColor(renderers[i]);
+            if (renderers[i] == null) continue;
+
+            foreach (Material material in renderers[i].materials)
+            {
+                if (material == null) continue;
+                material.EnableKeyword("_EMISSION");
+                material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
+            }
         }
     }
 
@@ -26,14 +31,14 @@ public class CarryableObject : MonoBehaviour
         if (isHighlighted == highlighted) return;
         isHighlighted = highlighted;
 
+        Color emission = highlighted ? highlightColor : Color.black;
+
         for (int i = 0; i < renderers.Length; i++)
         {
             if (renderers[i] == null) continue;
 
-            Color color = highlighted ? highlightColor : originalColors[i];
             renderers[i].GetPropertyBlock(propertyBlock);
-            propertyBlock.SetColor("_BaseColor", color);
-            propertyBlock.SetColor("_Color", color);
+            propertyBlock.SetColor("_EmissionColor", emission);
             renderers[i].SetPropertyBlock(propertyBlock);
         }
     }
@@ -42,19 +47,5 @@ public class CarryableObject : MonoBehaviour
     {
         SetHighlighted(false);
         gameObject.SetActive(false);
-    }
-
-    Color GetRendererColor(Renderer targetRenderer)
-    {
-        if (targetRenderer == null || targetRenderer.sharedMaterial == null)
-        {
-            return Color.white;
-        }
-
-        Material material = targetRenderer.sharedMaterial;
-        if (material.HasProperty("_BaseColor")) return material.GetColor("_BaseColor");
-        if (material.HasProperty("_Color")) return material.GetColor("_Color");
-
-        return Color.white;
     }
 }

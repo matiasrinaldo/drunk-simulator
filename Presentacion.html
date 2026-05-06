@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Drunk Simulator — Presentación</title>
+<style>
+  :root {
+    --bg-0: #0a0612;
+    --bg-1: #140a1f;
+    --bg-2: #1f1030;
+    --accent: #ffb347;
+    --accent-2: #ff5c8a;
+    --accent-3: #6ce5e8;
+    --text: #f5ecd9;
+    --text-dim: #b9a9c9;
+    --border: rgba(255, 179, 71, 0.25);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: var(--text);
+    background: radial-gradient(ellipse at top, var(--bg-2) 0%, var(--bg-0) 70%);
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(255, 92, 138, 0.12), transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(108, 229, 232, 0.10), transparent 45%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .deck {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5vh 8vw;
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none;
+  }
+
+  .slide.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+
+  .slide h1 {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 900;
+    letter-spacing: -2px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 60%, var(--accent-3) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    line-height: 1.05;
+  }
+
+  .slide h2 {
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 800;
+    color: var(--accent);
+    margin-bottom: 0.5em;
+    text-align: center;
+  }
+
+  .slide h3 {
+    font-size: 1.3rem;
+    color: var(--accent-3);
+    font-weight: 600;
+    margin-bottom: 0.4em;
+  }
+
+  .subtitle {
+    font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+    color: var(--text-dim);
+    margin-top: 1.5em;
+    text-align: center;
+    max-width: 780px;
+    line-height: 1.55;
+  }
+
+  .tagline {
+    font-style: italic;
+    font-size: clamp(1.2rem, 2vw, 1.6rem);
+    color: var(--accent-2);
+    margin-top: 2em;
+    text-align: center;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    max-width: 1100px;
+    width: 100%;
+    margin-top: 2.5rem;
+  }
+
+  .card {
+    background: linear-gradient(160deg, rgba(255, 179, 71, 0.08), rgba(255, 92, 138, 0.04));
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.5rem;
+    backdrop-filter: blur(8px);
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent-2);
+  }
+
+  .card .icon {
+    font-size: 2rem;
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+
+  .card p {
+    color: var(--text-dim);
+    line-height: 1.5;
+    font-size: 0.98rem;
+  }
+
+  .stat-row {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat .value {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900;
+    color: var(--accent);
+    display: block;
+  }
+
+  .stat .label {
+    font-size: 0.95rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+
+  .drink-table {
+    margin-top: 2rem;
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 800px;
+    background: rgba(20, 10, 31, 0.6);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .drink-table th, .drink-table td {
+    padding: 1rem 1.2rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .drink-table th {
+    background: rgba(255, 179, 71, 0.15);
+    color: var(--accent);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+  }
+
+  .drink-table tr:last-child td { border-bottom: none; }
+
+  .drink-table .drink-emoji { font-size: 1.5rem; }
+
+  .step-list {
+    counter-reset: step;
+    max-width: 760px;
+    margin-top: 2rem;
+    width: 100%;
+  }
+
+  .step {
+    counter-increment: step;
+    display: flex;
+    gap: 1.2rem;
+    align-items: flex-start;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .step:last-child { border-bottom: none; }
+
+  .step::before {
+    content: counter(step);
+    flex-shrink: 0;
+    width: 2.4rem;
+    height: 2.4rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: var(--bg-0);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 1.1rem;
+  }
+
+  .step-content h3 { color: var(--accent-2); margin-bottom: 0.25rem; font-size: 1.15rem; }
+  .step-content p { color: var(--text-dim); line-height: 1.5; }
+
+  .nav {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    background: rgba(20, 10, 31, 0.85);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: 0.5rem 1.2rem;
+    backdrop-filter: blur(10px);
+    z-index: 10;
+  }
+
+  .nav button {
+    background: transparent;
+    border: none;
+    color: var(--text);
+    font-size: 1.4rem;
+    cursor: pointer;
+    padding: 0.4rem 0.8rem;
+    border-radius: 50%;
+    transition: background 0.2s ease;
+  }
+
+  .nav button:hover:not(:disabled) { background: rgba(255, 179, 71, 0.2); }
+  .nav button:disabled { opacity: 0.3; cursor: default; }
+
+  .nav .counter {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    min-width: 60px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+    transition: width 0.4s ease;
+    z-index: 20;
+  }
+
+  .hint {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    opacity: 0.6;
+    z-index: 5;
+  }
+
+  .hint kbd {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-family: monospace;
+    margin: 0 2px;
+  }
+
+  .objective-box {
+    margin-top: 2rem;
+    padding: 2rem 3rem;
+    background: linear-gradient(135deg, rgba(255, 179, 71, 0.12), rgba(255, 92, 138, 0.08));
+    border: 2px solid var(--accent);
+    border-radius: 16px;
+    max-width: 800px;
+    text-align: center;
+  }
+
+  .objective-box .big {
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1.4;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 0.3rem 0.9rem;
+    background: rgba(108, 229, 232, 0.15);
+    border: 1px solid var(--accent-3);
+    color: var(--accent-3);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+
+  ul.feature-list {
+    list-style: none;
+    margin-top: 1.5rem;
+    max-width: 800px;
+  }
+
+  ul.feature-list li {
+    padding: 0.6rem 0;
+    color: var(--text-dim);
+    font-size: 1.05rem;
+    line-height: 1.5;
+    border-left: 3px solid var(--accent);
+    padding-left: 1rem;
+    margin-bottom: 0.5rem;
+    background: rgba(255, 179, 71, 0.04);
+  }
+
+  ul.feature-list li strong { color: var(--text); }
+
+  .center-vertical { display: flex; flex-direction: column; align-items: center; }
+
+  .credits {
+    margin-top: 3rem;
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="hint">Usá <kbd>←</kbd> <kbd>→</kbd> para navegar</div>
+
+<div class="deck" id="deck">
+
+  <!-- SLIDE 1: PORTADA -->
+  <section class="slide active">
+    <h1>DRUNK<br/>SIMULATOR</h1>
+    <p class="subtitle">Una experiencia en primera persona donde el bar es tu patio de juegos<br/>y el alcohol, tu peor enemigo.</p>
+    <p class="tagline">"Tomá. Tambaleá. Volvé a casa. Si podés."</p>
+  </section>
+
+  <!-- SLIDE 2: DE QUÉ TRATA -->
+  <section class="slide">
+    <h2>¿De qué trata?</h2>
+    <p class="subtitle">
+      <strong>Drunk Simulator</strong> es un simulador absurdo en primera persona donde encarnás
+      a un cliente de un bar. Frente a vos hay cervezas, tragos y whisky. Cuanto más tomás,
+      más se desfigura el mundo: la cámara se balancea, tus pasos se desvían sin permiso,
+      y agarrar un vaso se vuelve una odisea.
+    </p>
+    <div class="objective-box">
+      <p class="big">El bar es divertido.<br/>Volver a casa es el verdadero desafío.</p>
+    </div>
+  </section>
+
+  <!-- SLIDE 3: OBJETIVO -->
+  <section class="slide">
+    <h2>Objetivo del juego</h2>
+    <div class="step-list">
+      <div class="step">
+        <div class="step-content">
+          <h3>Agarrar un objeto de tu casa</h3>
+          <p>Empezás en casa. Buscá algo de valor para llevarte: ese objeto es tu boleto al bar.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h3>Manejar al Bar</h3>
+          <p>Subite al auto y conducí hasta el bar. El camino es directo… pero la noche apenas empieza.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h3>Vender el objeto</h3>
+          <p>En el bar, entregá el objeto que trajiste de tu casa para conseguir tragos. Sin venta, no hay fiesta.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h3>Emborracharse</h3>
+          <p>Tomá cerveza, tragos y whisky. Subí el nivel de alcohol y dejá que el mundo se empiece a desfigurar.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h3>Volver a casa (vivo)</h3>
+          <p>El verdadero desafío: manejar de vuelta con la cámara que se balancea y los controles que te traicionan. Llegar entero = victoria.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 6: EFECTOS DE BORRACHERA -->
+  <section class="slide">
+    <h2>Efectos de borrachera</h2>
+    <p class="subtitle">Todo está controlado por un único valor: <code style="color:var(--accent-3)">DrunkManager.EffectIntensity</code> — una curva exponencial sobre tu nivel actual.</p>
+    <div class="grid">
+      <div class="card">
+        <span class="icon">🎥</span>
+        <h3>Cámara (MouseLook)</h3>
+        <p>
+          • Pitch wobble: 1.1 Hz, ±2.5°<br/>
+          • Yaw wobble: 0.9 Hz, ±1.25°<br/>
+          • Roll wobble: 1.6 Hz, ±4°
+        </p>
+      </div>
+      <div class="card">
+        <span class="icon">👣</span>
+        <h3>Movimiento (PlayerMovement)</h3>
+        <p>
+          • Sway lateral: 1.4 Hz, ±0.9 unidades<br/>
+          • Input drift: 0.8 Hz, ±0.35<br/>
+          • Sprint con Ctrl (1.75×)
+        </p>
+      </div>
+      <div class="card">
+        <span class="icon">📈</span>
+        <h3>Curva exponencial</h3>
+        <p>El exponente <strong>1.6</strong> hace que los primeros tragos sean inocentes y los últimos, devastadores. La progresión no es lineal: es cuesta abajo.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 9: AUDIO Y ARTE -->
+  <section class="slide">
+    <h2>Audio y atmósfera</h2>
+    <div class="grid">
+      <div class="card">
+        <span class="icon">🎵</span>
+        <h3>Música de fondo</h3>
+        <p>Ambiente de bar para sumergirte en la noche. Mixer de Unity para balancear con los SFX.</p>
+      </div>
+      <div class="card">
+        <span class="icon">🔊</span>
+        <h3>SFX</h3>
+        <p>
+          • Sorbo de bebida (<em>DrinkSip</em>)<br/>
+          • Pago al barman (<em>PayDrink</em>)<br/>
+          • Sonidos de pickup y lanzamiento
+        </p>
+      </div>
+      <div class="card">
+        <span class="icon">🎨</span>
+        <h3>Arte</h3>
+        <p>Render Pipeline URP, materiales custom de la composición del bar, texturas propias y assets gratuitos de Kenney.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 11: PÚBLICO Y CIERRE -->
+  <section class="slide">
+    <h2>¿Para quién?</h2>
+    <p class="subtitle">
+      Fans de simuladores absurdos como <em>Surgeon Simulator</em>, <em>Goat Simulator</em>
+      o <em>Drunkn Bar Fight</em>. Jugadores que disfrutan del caos físico,
+      las mecánicas que se rebelan contra el control, y los clips imposibles para compartir.
+    </p>
+    <p class="tagline" style="margin-top:3rem;">No es un juego de beber.<br/>Es un juego <strong>sobre</strong> beber.</p>
+  </section>
+
+  <!-- SLIDE 12: GRACIAS -->
+  <section class="slide">
+    <h1>¡Salud! 🍻</h1>
+    <p class="subtitle">Drunk Simulator — Entrega 1<br/>Introducción al Desarrollo de Videojuegos</p>
+    <p class="credits">
+      Matias Sanchez Novelli<br/>
+      Maria Otegui<br/>
+      Matias Rinaldo
+    </p>
+  </section>
+
+</div>
+
+<div class="nav">
+  <button id="prev" aria-label="Slide anterior">‹</button>
+  <span class="counter" id="counter">1 / 12</span>
+  <button id="next" aria-label="Slide siguiente">›</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const prevBtn = document.getElementById('prev');
+  const nextBtn = document.getElementById('next');
+  const counter = document.getElementById('counter');
+  const progress = document.getElementById('progress');
+  let current = 0;
+
+  function go(index) {
+    current = Math.max(0, Math.min(slides.length - 1, index));
+    slides.forEach((s, i) => s.classList.toggle('active', i === current));
+    counter.textContent = `${current + 1} / ${slides.length}`;
+    progress.style.width = `${((current + 1) / slides.length) * 100}%`;
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === slides.length - 1;
+  }
+
+  prevBtn.addEventListener('click', () => go(current - 1));
+  nextBtn.addEventListener('click', () => go(current + 1));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); go(current + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(current - 1); }
+    else if (e.key === 'Home') go(0);
+    else if (e.key === 'End') go(slides.length - 1);
+  });
+
+  go(0);
+</script>
+
+</body>
+</html>

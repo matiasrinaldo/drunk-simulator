@@ -7,6 +7,10 @@ public class DrunkManager : MonoBehaviour
     [SerializeField] private int maxLevel = 24;
     [SerializeField] private float effectExponent = 1.6f;
 
+    [Header("Debug")]
+    [SerializeField] private KeyCode debugAddAlcoholKey = KeyCode.G;
+    [SerializeField] private int debugAddAlcoholAmount = 1;
+
     [Header("Runtime")]
     [SerializeField] private int alcoholLevel = 0;
 
@@ -17,6 +21,14 @@ public class DrunkManager : MonoBehaviour
     public float EffectIntensity => Mathf.Pow(NormalizedLevel, effectExponent);
 
     public event Action<int> OnAlcoholLevelChanged;
+
+    void Update()
+    {
+        if (Input.GetKeyDown(debugAddAlcoholKey))
+        {
+            AddAlcohol(debugAddAlcoholAmount);
+        }
+    }
 
     public void AddAlcohol(int amount)
     {
