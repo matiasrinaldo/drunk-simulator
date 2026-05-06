@@ -6,7 +6,6 @@ public class CarController : MonoBehaviour
     [Header("Driving")]
     [SerializeField] private float thrust = 12000f;
     [SerializeField] private float reverseMultiplier = 0.5f;
-    [Tooltip("Velocidad angular maxima del giro en rad/s. Se aplica directo sobre Rigidbody.angularVelocity.")]
     [SerializeField] private float steerSpeed = 2.5f;
     [SerializeField] private float maxSpeed = 18f;
 
@@ -14,7 +13,6 @@ public class CarController : MonoBehaviour
     [SerializeField] private float steerSpeedThreshold = 1.5f;
 
     [Header("Stability")]
-    [Tooltip("Offset local del centro de masa. Bajarlo evita que el auto se de vuelta facil.")]
     [SerializeField] private Vector3 centerOfMassOffset = new Vector3(0f, -0.5f, 0f);
 
     [Header("Drunk Driving")]
