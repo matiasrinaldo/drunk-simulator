@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 1970099735332961001}
   m_Layer: 0
   m_Name: player
-  m_TagString: Untagged
+  m_TagString: player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -166,6 +166,7 @@ MonoBehaviour:
   lateralSwayFrequency: 1.4
   inputDriftAmount: 0.35
   inputDriftFrequency: 0.8
+  drunkSpeedPenalty: 0.25
 --- !u!114 &8010684068983644041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,6 +180,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DrunkManager
   maxLevel: 8
+  effectExponent: 1.6
+  alcoholLevel: 0
 --- !u!114 &1970099735332961001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,6 +194,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39a317deb4a9ea3438e3beb9c7c4f28c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerPickup
+  pickupKey: 101
+  selectionDistance: 3
+  proximityDistance: 1.5
+  pickupLayerMask:
+    serializedVersion: 2
+    m_Bits: 51
+  holdPoint: {fileID: 0}
+  showAimDot: 1
+  aimDotSize: 4
+  aimDotColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &4814585906698476891
 GameObject:
   m_ObjectHideFlags: 0
