@@ -5,9 +5,19 @@ public class MainMenuActions : MonoBehaviour
 {
     [SerializeField] string homeSceneName = "Home";
 
-    public void Play()
+    public void StartGame()
     {
         SceneManager.LoadScene(homeSceneName);
+    }
+
+    public void Play()
+    {
+        StartGame();
+    }
+
+    public void ExitGame()
+    {
+        Quit();
     }
 
     public void Quit()
