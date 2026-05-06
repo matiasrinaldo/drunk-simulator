@@ -8926,7 +8926,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CarEnterExit
   playerCarController: {fileID: 0}
   player: {fileID: 1989551677}
-  interactRange: 3
+  interactRange: 5
 --- !u!114 &1104004502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8939,11 +8939,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4681a8c104a4e5d4b81c39e74230966a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarController
-  thrust: 2500
+  thrust: 12000
   reverseMultiplier: 0.5
-  steerTorque: 600
-  maxSpeed: 20
+  steerSpeed: 2.5
+  maxSpeed: 18
   steerSpeedThreshold: 1.5
+  centerOfMassOffset: {x: 0, y: -0.5, z: 0}
 --- !u!54 &1104004503
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8952,9 +8953,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1104004498}
   serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_Mass: 300
+  m_LinearDamping: 0.2
+  m_AngularDamping: 5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -8968,9 +8969,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!65 &1104004504
 BoxCollider:
   m_ObjectHideFlags: 0
