@@ -13,6 +13,12 @@ public class PlayerPickup : MonoBehaviour
     public float aimDotSize = 4f;
     public Color aimDotColor = Color.white;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip drinkSipClip;
+    [SerializeField, Range(0f, 1f)] private float drinkSipVolume = 1f;
+    [SerializeField] private AudioClip payDrinkClip;
+    [SerializeField, Range(0f, 1f)] private float payDrinkVolume = 1f;
+
     Camera mainCamera;
     DrunkManager drunkManager;
     PickupItem currentPickupItem;
@@ -32,6 +38,7 @@ public class PlayerPickup : MonoBehaviour
     {
         hasHeldObject = false;
     }
+    AudioSource sfxSource;
 
     void Awake()
     {
@@ -52,6 +59,31 @@ public class PlayerPickup : MonoBehaviour
             holdPointObject.transform.localRotation = Quaternion.Euler(8f, -18f, 0f);
             holdPointObject.transform.localScale = Vector3.one;
             holdPoint = holdPointObject.transform;
+        }
+
+        sfxSource = gameObject.GetComponent<AudioSource>();
+        if (sfxSource == null)
+        {
+            sfxSource = gameObject.AddComponent<AudioSource>();
+        }
+        sfxSource.playOnAwake = false;
+
+        if (drinkSipClip == null)
+        {
+            drinkSipClip = Resources.Load<AudioClip>("Audio/SFX/DrinkSip");
+            if (drinkSipClip == null)
+            {
+                drinkSipClip = Resources.Load<AudioClip>("Audio/DrinkSip");
+            }
+        }
+
+        if (payDrinkClip == null)
+        {
+            payDrinkClip = Resources.Load<AudioClip>("Audio/SFX/PayDrink");
+            if (payDrinkClip == null)
+            {
+                payDrinkClip = Resources.Load<AudioClip>("Audio/PayDrink");
+            }
         }
     }
 
@@ -190,6 +222,11 @@ public class PlayerPickup : MonoBehaviour
         heldSips = 0;
         hasHeldDrink = currentHeldVisual != null;
 
+        if (payDrinkClip != null && sfxSource != null)
+        {
+            sfxSource.PlayOneShot(payDrinkClip, Mathf.Clamp01(payDrinkVolume));
+        }
+
         item.OnPickedUp();
         currentPickupItem = null;
         lastHighlightedItem = null;
@@ -202,6 +239,11 @@ public class PlayerPickup : MonoBehaviour
         if (drunkManager != null)
         {
             drunkManager.AddAlcohol(heldAlcoholPerSip);
+        }
+
+        if (drinkSipClip != null && sfxSource != null)
+        {
+            sfxSource.PlayOneShot(drinkSipClip, Mathf.Clamp01(drinkSipVolume));
         }
 
         heldSips++;
