@@ -57,6 +57,28 @@ public class PlayerCarController : MonoBehaviour
     {
         if (fpsCamera != null) fpsCamera.enabled = !IsInCar;
         if (carCamera != null) carCamera.enabled = IsInCar;
+
+        UpdateAudioListeners();
+    }
+
+    // Al entrar al auto el jugador se desactiva (SetActive(false)) y con el se apaga
+    // su AudioListener, dejando la escena sin oido y cortando la musica de fondo.
+    // Garantizamos que la camara del auto tenga un AudioListener activo mientras se
+    // conduce, y que nunca haya dos listeners activos al mismo tiempo.
+    private void UpdateAudioListeners()
+    {
+        if (carCamera != null)
+        {
+            AudioListener carListener = carCamera.GetComponent<AudioListener>();
+            if (carListener == null) carListener = carCamera.gameObject.AddComponent<AudioListener>();
+            carListener.enabled = IsInCar;
+        }
+
+        if (fpsCamera != null)
+        {
+            AudioListener fpsListener = fpsCamera.GetComponent<AudioListener>();
+            if (fpsListener != null) fpsListener.enabled = !IsInCar;
+        }
     }
 
     private ParkingSpot FindActiveSpotForExit()
