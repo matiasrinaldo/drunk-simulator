@@ -22,6 +22,11 @@ public class CityHomeDoorTrigger : MonoBehaviour
         if (!other.CompareTag(playerTag)) return;
 
         triggered = true;
+
+        // Recordamos donde quedo estacionado el auto antes de descargar la City.
+        var car = FindFirstObjectByType<CarController>();
+        if (car != null) CarStateStore.Save(car.transform);
+
         SceneManager.LoadSceneAsync(sceneToLoad);
     }
 }

@@ -42,6 +42,19 @@ public class CarController : MonoBehaviour
         drunkManager = FindFirstObjectByType<DrunkManager>();
     }
 
+    void Start()
+    {
+        // Si veniamos de otra escena, restauramos donde dejamos el auto
+        // (p. ej. estacionado frente al bar) en vez de la posicion por defecto.
+        if (!CarStateStore.HasSavedState) return;
+
+        transform.SetPositionAndRotation(CarStateStore.Position, CarStateStore.Rotation);
+        rb.position = CarStateStore.Position;
+        rb.rotation = CarStateStore.Rotation;
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+    }
+
     public void SetControlled(bool value)
     {
         isControlled = value;
