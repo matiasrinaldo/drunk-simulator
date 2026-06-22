@@ -1,0 +1,103 @@
+# Requirements: Drunk Simulator
+
+**Defined:** 2026-06-22
+**Core Value:** El loop de dificultad creciente — tomar distorsiona el manejo, y volver a casa sin chocar se vuelve cada vez más difícil.
+**Milestone:** TP2 + loop core mínimo
+
+> Objetivos TP2 ya satisfechos por el código existente (no requieren trabajo): **TP2.7 Raycasting** (`PlayerPickup` usa `Physics.Raycast`) y la parte de **gravedad** de TP2.6 (Rigidbody del auto). Este milestone cubre el resto.
+
+## v1 Requirements
+
+Requisitos del milestone actual. Cada uno mapea a una fase del roadmap.
+
+### Economía
+
+- [ ] **ECON-01**: Cada objeto agarrable de la casa tiene un valor monetario configurable
+- [ ] **ECON-02**: Al vender un objeto en el bar, el jugador recibe su valor en dinero
+- [ ] **ECON-03**: Cada bebida tiene un precio y solo se puede comprar si el jugador tiene dinero suficiente
+- [ ] **ECON-04**: Comprar una bebida descuenta su precio del dinero (reemplaza el trueque objeto↔bebida actual)
+
+### Estado de Juego
+
+- [ ] **GAME-01**: El jugador pierde al chocar contra casa, árbol, niño o mascota mientras maneja
+- [ ] **GAME-02**: El jugador gana cuando vendió todos los objetos de su casa habiendo alcanzado un nivel mínimo de borrachera
+- [ ] **GAME-03**: Se muestra un estado/pantalla de victoria al cumplir la condición de ganar
+- [ ] **GAME-04**: Se muestra un estado/pantalla de derrota al chocar
+
+### HUD in-level (TP2.3)
+
+- [ ] **HUD-01**: Barra de borrachera visible durante el juego que refleja el nivel actual de alcohol
+- [ ] **HUD-02**: Indicador de dinero visible que se actualiza al vender objetos y comprar bebidas
+
+### Patrón Flyweight (TP2.1)
+
+- [ ] **PAT-01**: Implementar el patrón Flyweight para datos compartidos (p.ej. definiciones de objetos vendibles y/o bebidas como datos intrínsecos compartidos)
+
+### Animaciones (TP2.2)
+
+- [ ] **ANIM-01**: Animación por máquina de estados (Animator) en un elemento principal del juego
+- [ ] **ANIM-02**: Animación por código en al menos un elemento del juego
+
+### Efectos visuales (TP2.5, TP2.6)
+
+- [ ] **FX-01**: Sistema de partículas en al menos un evento del juego (p.ej. choque, sorbo, venta)
+- [ ] **FX-02**: Efecto de luces en el juego (p.ej. luces/faros del auto, ambiente del bar, halo de objetos)
+
+### Carga de nivel (TP2.4)
+
+- [ ] **SCENE-01**: Escena dedicada de carga asincrónica de nivel con feedback visual (pantalla de loading)
+
+## v2 Requirements
+
+Diferido a un milestone posterior (pendientes de TP1). Reconocido pero fuera del roadmap actual.
+
+### Pendientes TP1
+
+- **TP1-CINE**: Usar Cinemachine para el manejo de cámara (TP1.5)
+- **TP1-MENU**: Escena de menú principal (TP1.12)
+- **TP1-STRAT**: Implementar patrón Strategy (TP1.9)
+- **TP1-UISCROLL**: Elemento de UI con scrolling / layout group (TP1.10)
+- **TP1-EVENTS**: Llegar a ≥3 eventos (actions/delegates) con sentido (TP1.11) — hoy hay 1
+
+## Out of Scope
+
+Excluido explícitamente para evitar scope creep.
+
+| Feature | Reason |
+|---------|--------|
+| Bajar a Unity 2022.3.35 LTS | La consigna lo pide pero el proyecto está en 6000.3.11f1; downgrade riesgoso, requiere confirmación de la cátedra |
+| Migración completa de cámaras a Cinemachine | Decisión de mantener cámaras custom este milestone; se asume el riesgo en TP1.5 |
+| Menú principal elaborado | Diferido a milestone de pendientes TP1 |
+| Multiplayer / red | Fuera del alcance del juego |
+
+## Traceability
+
+Qué fases cubren qué requisitos. Se completa al crear el roadmap.
+
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| ECON-01 | TBD | Pending |
+| ECON-02 | TBD | Pending |
+| ECON-03 | TBD | Pending |
+| ECON-04 | TBD | Pending |
+| GAME-01 | TBD | Pending |
+| GAME-02 | TBD | Pending |
+| GAME-03 | TBD | Pending |
+| GAME-04 | TBD | Pending |
+| HUD-01 | TBD | Pending |
+| HUD-02 | TBD | Pending |
+| PAT-01 | TBD | Pending |
+| ANIM-01 | TBD | Pending |
+| ANIM-02 | TBD | Pending |
+| FX-01 | TBD | Pending |
+| FX-02 | TBD | Pending |
+| SCENE-01 | TBD | Pending |
+
+**Coverage:**
+- v1 requirements: 16 total
+- Mapped to phases: 0 (pendiente de roadmap)
+- Unmapped: 16 ⚠️
+
+---
+*Requirements defined: 2026-06-22*
+*Last updated: 2026-06-22 after initial definition*
