@@ -76,28 +76,28 @@ Qué fases cubren qué requisitos. Se completa al crear el roadmap.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| ECON-01 | TBD | Pending |
-| ECON-02 | TBD | Pending |
-| ECON-03 | TBD | Pending |
-| ECON-04 | TBD | Pending |
-| GAME-01 | TBD | Pending |
-| GAME-02 | TBD | Pending |
-| GAME-03 | TBD | Pending |
-| GAME-04 | TBD | Pending |
-| HUD-01 | TBD | Pending |
-| HUD-02 | TBD | Pending |
-| PAT-01 | TBD | Pending |
-| ANIM-01 | TBD | Pending |
-| ANIM-02 | TBD | Pending |
-| FX-01 | TBD | Pending |
-| FX-02 | TBD | Pending |
-| SCENE-01 | TBD | Pending |
+| ECON-01 | Phase 1 | Pending |
+| ECON-02 | Phase 1 | Pending |
+| ECON-03 | Phase 1 | Pending |
+| ECON-04 | Phase 1 | Pending |
+| PAT-01 | Phase 1 | Pending |
+| HUD-01 | Phase 2 | Pending |
+| HUD-02 | Phase 2 | Pending |
+| GAME-01 | Phase 3 | Pending |
+| GAME-02 | Phase 3 | Pending |
+| GAME-03 | Phase 3 | Pending |
+| GAME-04 | Phase 3 | Pending |
+| ANIM-01 | Phase 4 | Pending |
+| ANIM-02 | Phase 4 | Pending |
+| FX-01 | Phase 5 | Pending |
+| FX-02 | Phase 5 | Pending |
+| SCENE-01 | Phase 5 | Pending |
 
 **Coverage:**
 - v1 requirements: 16 total
-- Mapped to phases: 0 (pendiente de roadmap)
-- Unmapped: 16 ⚠️
+- Mapped to phases: 16
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-06-22*
-*Last updated: 2026-06-22 after initial definition*
+*Last updated: 2026-06-22 — traceability completa tras creación del roadmap*
