@@ -26,6 +26,10 @@ ignore.conf
 *.txt
 *.md
 
+#GSD planning docs (override *.md / *.txt ignore above)
+!.planning/
+!.planning/**
+
 #Agents
 .claude
 CLAUDE.md
