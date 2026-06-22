@@ -31,7 +31,10 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Cada PickupItem (bebida) muestra un precio; el jugador no puede tomar una bebida si no tiene dinero suficiente
   4. Comprar una bebida descuenta su precio del dinero del jugador (el trueque anterior ya no funciona)
   5. El Flyweight de definiciones (DrinkDefinition / SellableDefinition como ScriptableObject compartido) es la fuente de verdad de precio y alcohol; no hay valores duplicados hardcodeados en prefabs
-**Plans**: TBD
+**Plans**: 2 planes
+Plans:
+- [ ] 01-01-PLAN.md — Slice A: SellableDefinition + stores (PlayerMoneyStore, HeldObjectStore) + CarryableObject + SellCounter en Bar (vender objeto → dinero sube)
+- [ ] 01-02-PLAN.md — Slice B: DrinkDefinition + migración PickupItem + compra-con-dinero en PlayerPickup + SFX de rechazo (comprar bebida con el dinero de A)
 
 ### Phase 2: HUD in-level
 **Goal**: El jugador puede leer su nivel de borrachera y su dinero disponible en cualquier momento del juego
@@ -89,7 +92,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Economía | 0/? | Not started | - |
+| 1. Economía | 0/2 | Not started | - |
 | 2. HUD in-level | 0/? | Not started | - |
 | 3. Loop de victoria y derrota | 0/? | Not started | - |
 | 4. Animaciones | 0/? | Not started | - |
