@@ -1323,9 +1323,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 710bf97389a92ce43bbba2c80912ebfb, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::CarryableObject
   highlightColor: {r: 1, g: 0.9, b: 0.15, a: 1}
+  objectId: home-obj-1
+  definition: {fileID: 11400000, guid: 2f83dfca8e0e4958b1d2b863eb71167a, type: 2}
 --- !u!1 &680744438 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 28b6743ed3d94474c90818f791a6bd60, type: 3}
@@ -2324,9 +2326,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 710bf97389a92ce43bbba2c80912ebfb, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::CarryableObject
   highlightColor: {r: 1, g: 0.9, b: 0.15, a: 1}
+  objectId: home-obj-2
+  definition: {fileID: 11400000, guid: 2f83dfca8e0e4958b1d2b863eb71167a, type: 2}
 --- !u!1001 &957772359
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2589,9 +2593,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 710bf97389a92ce43bbba2c80912ebfb, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::CarryableObject
   highlightColor: {r: 1, g: 0.9, b: 0.15, a: 1}
+  objectId: home-obj-3
+  definition: {fileID: 11400000, guid: 506788a4ec5f4bf0ab38915cb3129ef0, type: 2}
 --- !u!1 &997318417 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: dd0941d176d780641a90a884bfea1bc8, type: 3}
@@ -2656,9 +2662,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 710bf97389a92ce43bbba2c80912ebfb, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::CarryableObject
   highlightColor: {r: 1, g: 0.9, b: 0.15, a: 1}
+  objectId: home-obj-4
+  definition: {fileID: 11400000, guid: 506788a4ec5f4bf0ab38915cb3129ef0, type: 2}
 --- !u!1 &1012476467 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: cc85ba92b37059541916de24367170af, type: 3}
@@ -4676,9 +4684,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 710bf97389a92ce43bbba2c80912ebfb, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::CarryableObject
   highlightColor: {r: 1, g: 0.9, b: 0.15, a: 1}
+  objectId: home-obj-5
+  definition: {fileID: 11400000, guid: 035d69f5f62e43b0a1a10147e80acf76, type: 2}
 --- !u!1 &1910875560 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 097f12d3485cfcc4ea448e29f3a2a281, type: 3}
@@ -4842,9 +4852,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 710bf97389a92ce43bbba2c80912ebfb, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::CarryableObject
   highlightColor: {r: 1, g: 0.9, b: 0.15, a: 1}
+  objectId: home-obj-6
+  definition: {fileID: 11400000, guid: 035d69f5f62e43b0a1a10147e80acf76, type: 2}
 --- !u!1 &2078334976 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: cc85ba92b37059541916de24367170af, type: 3}

@@ -30,13 +30,15 @@ public class PlayerPickup : MonoBehaviour
     int heldMaxSips;
     int heldSips;
     bool hasHeldDrink;
-    static bool hasHeldObject;
+    SellCounter currentSellCounter;
 
-    public bool HasHeldObject => hasHeldObject;
+    /// <summary>Delega a HeldObjectStore — persiste entre escenas.</summary>
+    public bool HasHeldObject => HeldObjectStore.HasHeldObject;
 
+    /// <summary>Libera el objeto sostenido (delegado a HeldObjectStore).</summary>
     public void ConsumeHeldObject()
     {
-        hasHeldObject = false;
+        HeldObjectStore.Clear();
     }
     AudioSource sfxSource;
 
@@ -97,12 +99,17 @@ public class PlayerPickup : MonoBehaviour
             {
                 DrinkHeldItem();
             }
-            else if (currentPickupItem != null && hasHeldObject)
+            else if (currentSellCounter != null && HeldObjectStore.HasHeldObject)
             {
-                hasHeldObject = false;
+                // Vender el objeto al mostrador del Bar (D-01)
+                currentSellCounter.TrySell();
+            }
+            else if (currentPickupItem != null)
+            {
+                // Compra de bebida (el trueque fue reemplazado por economía — Plan 01-01)
                 Pickup(currentPickupItem);
             }
-            else if (currentCarryable != null && !hasHeldObject)
+            else if (currentCarryable != null && !HeldObjectStore.HasHeldObject)
             {
                 PickupCarryable(currentCarryable);
             }
@@ -131,6 +138,7 @@ public class PlayerPickup : MonoBehaviour
     {
         currentPickupItem = null;
         currentCarryable = null;
+        currentSellCounter = null;
 
         if (mainCamera == null)
         {
@@ -145,6 +153,11 @@ public class PlayerPickup : MonoBehaviour
             if (currentPickupItem == null)
             {
                 currentCarryable = hit.collider.GetComponentInParent<CarryableObject>();
+            }
+            if (currentPickupItem == null && currentCarryable == null)
+            {
+                // Detectar mostrador de venta — mismo patron GetComponentInParent (Opcion A RESEARCH.md)
+                currentSellCounter = hit.collider.GetComponentInParent<SellCounter>();
             }
         }
 
@@ -204,8 +217,8 @@ public class PlayerPickup : MonoBehaviour
     {
         if (carryable == null) return;
 
+        // OnPickedUp llama HeldObjectStore.SetHeld — no hay que asignar hasHeldObject aqui.
         carryable.OnPickedUp();
-        hasHeldObject = true;
         currentCarryable = null;
         lastHighlightedCarryable = null;
     }

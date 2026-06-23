@@ -8,6 +8,15 @@ public class CarryableObject : MonoBehaviour
     [Tooltip("Opcional. Si se deja vacio se calcula un ID estable por su ubicacion en la escena.")]
     [SerializeField] string objectId;
 
+    [Header("Definicion")]
+    [SerializeField] private SellableDefinition definition;
+
+    /// <summary>Definicion Flyweight de este tipo de objeto (valor de venta, nombre).</summary>
+    public SellableDefinition Definition => definition;
+
+    /// <summary>Valor de venta en pesos. Retorna 0 si no hay definicion asignada.</summary>
+    public int SellValue => definition != null ? definition.SellValue : 0;
+
     Renderer[] renderers;
     MaterialPropertyBlock propertyBlock;
     bool isHighlighted;
@@ -81,8 +90,9 @@ public class CarryableObject : MonoBehaviour
 
     public void OnPickedUp()
     {
-        // Lo agarraste: su lugar en la casa queda vacio para siempre (esta partida).
-        DeliveredObjectsStore.MarkTaken(StableId);
+        // Registrar en el store el objeto sostenido (definicion + id estable).
+        // NO marcar como entregado aqui — se marca al vender en SellCounter.TrySell().
+        HeldObjectStore.SetHeld(definition, StableId);
         SetHighlighted(false);
         gameObject.SetActive(false);
     }
