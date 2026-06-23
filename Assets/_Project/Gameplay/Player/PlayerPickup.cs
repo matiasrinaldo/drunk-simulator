@@ -18,6 +18,12 @@ public class PlayerPickup : MonoBehaviour
     [SerializeField, Range(0f, 1f)] private float drinkSipVolume = 1f;
     [SerializeField] private AudioClip payDrinkClip;
     [SerializeField, Range(0f, 1f)] private float payDrinkVolume = 1f;
+    [SerializeField] private AudioClip rejectClip;
+    [SerializeField, Range(0f, 1f)] private float rejectVolume = 1f;
+
+    [Header("Debug")]
+    [SerializeField] private KeyCode debugAddMoneyKey = KeyCode.M;
+    [SerializeField] private int debugAddMoneyAmount = 50;
 
     Camera mainCamera;
     DrunkManager drunkManager;
@@ -87,11 +93,28 @@ public class PlayerPickup : MonoBehaviour
                 payDrinkClip = Resources.Load<AudioClip>("Audio/PayDrink");
             }
         }
+
+        if (rejectClip == null)
+        {
+            rejectClip = Resources.Load<AudioClip>("Audio/SFX/NoMoney");
+            if (rejectClip == null)
+            {
+                // Fallback al clip de pago existente si NoMoney.mp3 no esta disponible (D-10)
+                rejectClip = Resources.Load<AudioClip>("Audio/SFX/PayDrink");
+            }
+        }
     }
 
     void Update()
     {
         UpdateSelectionByLook();
+
+        // Tecla de debug: agrega dinero para probar la compra sin hacer el loop completo (VALIDATION.md)
+        if (Input.GetKeyDown(debugAddMoneyKey))
+        {
+            PlayerMoneyStore.Add(debugAddMoneyAmount);
+            Debug.Log($"[PlayerPickup] Debug: dinero añadido. Saldo: ${PlayerMoneyStore.Money}");
+        }
 
         if (Input.GetKeyDown(pickupKey))
         {
@@ -106,7 +129,16 @@ public class PlayerPickup : MonoBehaviour
             }
             else if (currentPickupItem != null)
             {
-                // Compra de bebida (el trueque fue reemplazado por economía — Plan 01-01)
+                // Compra de bebida con dinero real (ECON-03, ECON-04)
+                int precio = currentPickupItem.Price;
+                if (!PlayerMoneyStore.CanAfford(precio))
+                {
+                    // SFX de rechazo si no hay plata suficiente (D-10)
+                    if (rejectClip != null && sfxSource != null)
+                        sfxSource.PlayOneShot(rejectClip, Mathf.Clamp01(rejectVolume));
+                    return;
+                }
+                PlayerMoneyStore.Spend(precio);
                 Pickup(currentPickupItem);
             }
             else if (currentCarryable != null && !HeldObjectStore.HasHeldObject)
@@ -217,7 +249,7 @@ public class PlayerPickup : MonoBehaviour
     {
         if (carryable == null) return;
 
-        // OnPickedUp llama HeldObjectStore.SetHeld — no hay que asignar hasHeldObject aqui.
+        // OnPickedUp llama HeldObjectStore.SetHeld — el estado de objeto en mano persiste en el store.
         carryable.OnPickedUp();
         currentCarryable = null;
         lastHighlightedCarryable = null;
