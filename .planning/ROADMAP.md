@@ -39,7 +39,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 Plans:
 **Wave 1**
 
-- [ ] 01-01-PLAN.md — Slice A: SellableDefinition + stores (PlayerMoneyStore, HeldObjectStore) + CarryableObject + SellCounter en Bar (vender objeto → dinero sube)
+- [x] 01-01-PLAN.md — Slice A: SellableDefinition + stores (PlayerMoneyStore, HeldObjectStore) + CarryableObject + SellCounter en Bar (vender objeto → dinero sube)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -113,7 +113,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Economía | 0/2 | Not started | - |
+| 1. Economía | 1/2 | In Progress|  |
 | 2. HUD in-level | 0/? | Not started | - |
 | 3. Loop de victoria y derrota | 0/? | Not started | - |
 | 4. Animaciones | 0/? | Not started | - |

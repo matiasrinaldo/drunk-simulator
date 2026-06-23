@@ -12,8 +12,8 @@ Requisitos del milestone actual. Cada uno mapea a una fase del roadmap.
 
 ### Economía
 
-- [ ] **ECON-01**: Cada objeto agarrable de la casa tiene un valor monetario configurable
-- [ ] **ECON-02**: Al vender un objeto en el bar, el jugador recibe su valor en dinero
+- [x] **ECON-01**: Cada objeto agarrable de la casa tiene un valor monetario configurable
+- [x] **ECON-02**: Al vender un objeto en el bar, el jugador recibe su valor en dinero
 - [ ] **ECON-03**: Cada bebida tiene un precio y solo se puede comprar si el jugador tiene dinero suficiente
 - [ ] **ECON-04**: Comprar una bebida descuenta su precio del dinero (reemplaza el trueque objeto↔bebida actual)
 
@@ -31,7 +31,7 @@ Requisitos del milestone actual. Cada uno mapea a una fase del roadmap.
 
 ### Patrón Flyweight (TP2.1)
 
-- [ ] **PAT-01**: Implementar el patrón Flyweight para datos compartidos (p.ej. definiciones de objetos vendibles y/o bebidas como datos intrínsecos compartidos)
+- [x] **PAT-01**: Implementar el patrón Flyweight para datos compartidos (p.ej. definiciones de objetos vendibles y/o bebidas como datos intrínsecos compartidos)
 
 ### Animaciones (TP2.2)
 
@@ -76,11 +76,11 @@ Qué fases cubren qué requisitos. Se completa al crear el roadmap.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| ECON-01 | Phase 1 | Pending |
-| ECON-02 | Phase 1 | Pending |
+| ECON-01 | Phase 1 | Complete |
+| ECON-02 | Phase 1 | Complete |
 | ECON-03 | Phase 1 | Pending |
 | ECON-04 | Phase 1 | Pending |
-| PAT-01 | Phase 1 | Pending |
+| PAT-01 | Phase 1 | Complete |
 | HUD-01 | Phase 2 | Pending |
 | HUD-02 | Phase 2 | Pending |
 | GAME-01 | Phase 3 | Pending |
