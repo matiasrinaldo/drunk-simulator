@@ -91,8 +91,12 @@ public class CarryableObject : MonoBehaviour
     public void OnPickedUp()
     {
         // Registrar en el store el objeto sostenido (definicion + id estable).
-        // NO marcar como entregado aqui — se marca al vender en SellCounter.TrySell().
         HeldObjectStore.SetHeld(definition, StableId);
+        // Marcar como entregado YA: el objeto salio del mundo al agarrarlo. Evita que
+        // reaparezca al recargar la escena mientras sigue en mano (duplicacion / venta
+        // extra). No hay mecanismo de "soltar", asi que marcar al agarrar es seguro:
+        // este es el unico punto de verdad del marcado (CR-01).
+        DeliveredObjectsStore.MarkTaken(StableId);
         SetHighlighted(false);
         gameObject.SetActive(false);
     }

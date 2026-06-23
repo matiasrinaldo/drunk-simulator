@@ -61,11 +61,8 @@ public class SellCounter : MonoBehaviour
         // Acreditar dinero al jugador
         PlayerMoneyStore.Add(valor);
 
-        // Marcar el objeto como entregado para que no reaparezca al recargar Home
-        if (!string.IsNullOrEmpty(HeldObjectStore.HeldObjectId))
-        {
-            DeliveredObjectsStore.MarkTaken(HeldObjectStore.HeldObjectId);
-        }
+        // El objeto ya quedo marcado como entregado al agarrarlo (CarryableObject.OnPickedUp).
+        // La venta solo acredita dinero — unico punto de verdad del marcado en el pickup (CR-01).
 
         // Limpiar el objeto sostenido
         HeldObjectStore.Clear();
