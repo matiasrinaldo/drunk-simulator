@@ -609,7 +609,7 @@ Directivas que el plan debe respetar explícitamente:
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Outline del texto TMP: material vs Shadow component**
    - Lo que sabemos: La UI-SPEC indica usar outline (`outlineWidth ≈ 0.2`) sobre el material SDF o un `Shadow` component como alternativa.
