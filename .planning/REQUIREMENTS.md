@@ -14,8 +14,8 @@ Requisitos del milestone actual. Cada uno mapea a una fase del roadmap.
 
 - [x] **ECON-01**: Cada objeto agarrable de la casa tiene un valor monetario configurable
 - [x] **ECON-02**: Al vender un objeto en el bar, el jugador recibe su valor en dinero
-- [ ] **ECON-03**: Cada bebida tiene un precio y solo se puede comprar si el jugador tiene dinero suficiente
-- [ ] **ECON-04**: Comprar una bebida descuenta su precio del dinero (reemplaza el trueque objeto↔bebida actual)
+- [x] **ECON-03**: Cada bebida tiene un precio y solo se puede comprar si el jugador tiene dinero suficiente
+- [x] **ECON-04**: Comprar una bebida descuenta su precio del dinero (reemplaza el trueque objeto↔bebida actual)
 
 ### Estado de Juego
 
@@ -78,8 +78,8 @@ Qué fases cubren qué requisitos. Se completa al crear el roadmap.
 |-------------|-------|--------|
 | ECON-01 | Phase 1 | Complete |
 | ECON-02 | Phase 1 | Complete |
-| ECON-03 | Phase 1 | Pending |
-| ECON-04 | Phase 1 | Pending |
+| ECON-03 | Phase 1 | Complete |
+| ECON-04 | Phase 1 | Complete |
 | PAT-01 | Phase 1 | Complete |
 | HUD-01 | Phase 2 | Pending |
 | HUD-02 | Phase 2 | Pending |

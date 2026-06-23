@@ -13,7 +13,7 @@ Partimos de un juego brownfield que ya tiene borrachera, pickup, auto con Comman
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Economía** - Objetos vendibles con valor, bebidas con precio, y el patrón Flyweight como modelo de datos compartido
+- [x] **Phase 1: Economía** - Objetos vendibles con valor, bebidas con precio, y el patrón Flyweight como modelo de datos compartido (completed 2026-06-23)
 - [ ] **Phase 2: HUD in-level** - Barra de borrachera y contador de dinero siempre visibles durante el juego
 - [ ] **Phase 3: Loop de victoria y derrota** - Detección de choque, condición de ganar vendiendo todo, y pantallas de resultado
 - [ ] **Phase 4: Animaciones** - Animator state machine en un elemento principal y animación por código en otro
@@ -43,7 +43,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 01-02-PLAN.md — Slice B: DrinkDefinition + migración PickupItem + compra-con-dinero en PlayerPickup + SFX de rechazo (comprar bebida con el dinero de A)
+- [x] 01-02-PLAN.md — Slice B: DrinkDefinition + migración PickupItem + compra-con-dinero en PlayerPickup + SFX de rechazo (comprar bebida con el dinero de A)
 
 ### Phase 2: HUD in-level
 
@@ -113,7 +113,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Economía | 1/2 | In Progress|  |
+| 1. Economía | 2/2 | Complete   | 2026-06-23 |
 | 2. HUD in-level | 0/? | Not started | - |
 | 3. Loop de victoria y derrota | 0/? | Not started | - |
 | 4. Animaciones | 0/? | Not started | - |
