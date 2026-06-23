@@ -231,7 +231,7 @@ public class PlayerPickup : MonoBehaviour
         Destroy(currentHeldVisual);
         currentHeldVisual = CreateHeldVisual(item);
         heldAlcoholPerSip = item.AlcoholPerSip;
-        heldMaxSips = Mathf.Max(1, item.maxSips);
+        heldMaxSips = Mathf.Max(1, item.MaxSips);
         heldSips = 0;
         hasHeldDrink = currentHeldVisual != null;
 
@@ -276,7 +276,7 @@ public class PlayerPickup : MonoBehaviour
         GameObject source = item.heldVisualPrefab != null ? item.heldVisualPrefab : item.gameObject;
         Vector3 originalWorldScale = item.transform.lossyScale;
         GameObject clone = Instantiate(source);
-        clone.name = item.ResolvedPickupType.ToString();
+        clone.name = item.Definition != null ? item.Definition.DrinkName : item.gameObject.name;
         clone.transform.SetParent(holdPoint, false);
         clone.transform.localPosition = Vector3.zero;
         clone.transform.localRotation = Quaternion.identity;

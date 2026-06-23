@@ -1,21 +1,15 @@
 using UnityEngine;
 
-public enum PickupType
-{
-    Trago,
-    Cerveza,
-    Whisky
-}
-
+/// <summary>
+/// Componente que identifica un item como bebida comprable.
+/// Los parametros de precio y alcohol se delegan al DrinkDefinition Flyweight.
+/// </summary>
 public class PickupItem : MonoBehaviour
 {
-    public PickupType pickupType = PickupType.Trago;
-    public string itemName = "";
+    [Header("Definicion")]
+    [SerializeField] private DrinkDefinition definition;
+
     public bool infiniteSupply = true;
-    public int maxSips = 4;
-    public int beerAlcoholPerSip = 1;
-    public int cocktailAlcoholPerSip = 2;
-    public int whiskyAlcoholPerSip = 3;
     public GameObject heldVisualPrefab;
     public bool overrideHeldVisualScale;
     public Vector3 heldVisualScale = Vector3.one;
@@ -25,37 +19,17 @@ public class PickupItem : MonoBehaviour
     MaterialPropertyBlock propertyBlock;
     bool isHighlighted;
 
-    public PickupType ResolvedPickupType
-    {
-        get
-        {
-            string lookupName = string.IsNullOrWhiteSpace(itemName) ? gameObject.name : itemName;
-            string lowerName = lookupName.ToLowerInvariant();
+    /// <summary>Acceso publico a la definicion Flyweight de esta bebida.</summary>
+    public DrinkDefinition Definition => definition;
 
-            if (lowerName.Contains("cerveza")) return PickupType.Cerveza;
-            if (lowerName.Contains("whisky")) return PickupType.Whisky;
-            if (lowerName.Contains("trago")) return PickupType.Trago;
+    /// <summary>Precio de la bebida en pesos (delegado al SO).</summary>
+    public int Price => definition != null ? definition.Price : 0;
 
-            return pickupType;
-        }
-    }
+    /// <summary>Unidades de alcohol por sorbo (delegado al SO).</summary>
+    public int AlcoholPerSip => definition != null ? definition.AlcoholPerSip : 0;
 
-    public int AlcoholPerSip
-    {
-        get
-        {
-            switch (ResolvedPickupType)
-            {
-                case PickupType.Cerveza:
-                    return beerAlcoholPerSip;
-                case PickupType.Whisky:
-                    return whiskyAlcoholPerSip;
-                case PickupType.Trago:
-                default:
-                    return cocktailAlcoholPerSip;
-            }
-        }
-    }
+    /// <summary>Cantidad de sorbos de la bebida (delegado al SO).</summary>
+    public int MaxSips => definition != null ? definition.MaxSips : 1;
 
     void Awake()
     {

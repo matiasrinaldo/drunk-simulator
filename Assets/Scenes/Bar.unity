@@ -210,8 +210,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75904170a2175484c95295ffd8ab82a8, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::PickupItem
+  definition: {fileID: 11400000, guid: b208f79bfcf3b4af9b4371d34fcdd92d, type: 2}
   pickupType: 0
   itemName: 
   infiniteSupply: 1
@@ -4267,8 +4268,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75904170a2175484c95295ffd8ab82a8, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::PickupItem
+  definition: {fileID: 11400000, guid: 0ff2a813e985a4d799e0d7abaf2081c4, type: 2}
   pickupType: 0
   itemName: 
   infiniteSupply: 1
@@ -5768,8 +5770,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75904170a2175484c95295ffd8ab82a8, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::PickupItem
+  definition: {fileID: 11400000, guid: e58f8024f800a4138985d2a3b1e53dad, type: 2}
   pickupType: 0
   itemName: 
   infiniteSupply: 1
