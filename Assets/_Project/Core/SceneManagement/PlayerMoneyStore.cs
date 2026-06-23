@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -8,6 +9,9 @@ using UnityEngine;
 /// </summary>
 public static class PlayerMoneyStore
 {
+    /// <summary>Se dispara cuando el saldo cambia. Argumento: nuevo saldo.</summary>
+    public static event Action<int> OnMoneyChanged;
+
     /// <summary>Saldo actual del jugador en pesos.</summary>
     public static int Money { get; private set; } = 0;
 
@@ -17,6 +21,7 @@ public static class PlayerMoneyStore
         if (amount <= 0) return;
         Money += amount;
         Debug.Log($"[PlayerMoneyStore] +${amount}. Saldo: ${Money}");
+        OnMoneyChanged?.Invoke(Money);
     }
 
     /// <summary>Descuenta el monto indicado. Retorna false si no hay saldo suficiente.</summary>
@@ -26,6 +31,7 @@ public static class PlayerMoneyStore
         if (Money < amount) return false;
         Money -= amount;
         Debug.Log($"[PlayerMoneyStore] -${amount}. Saldo: ${Money}");
+        OnMoneyChanged?.Invoke(Money);
         return true;
     }
 
@@ -36,5 +42,6 @@ public static class PlayerMoneyStore
     public static void Clear()
     {
         Money = 0;
+        OnMoneyChanged?.Invoke(Money);
     }
 }
