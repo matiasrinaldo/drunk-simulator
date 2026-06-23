@@ -57,8 +57,15 @@ Plans:
   2. Un indicador de dinero (texto TMP) se actualiza instantáneamente al vender un objeto o comprar una bebida
   3. El HUD es visible tanto en modo FPS (City/Bar/Home) como en modo auto (City con CarFollowCamera)
 
-**Plans**: TBD
-**UI hint**: yes
+**Plans**: 2 planes
+Plans:
+**Wave 1**
+
+- [ ] 02-01-PLAN.md — Wave 0 bloqueante: importar TMP Essential Resources + agregar OnMoneyChanged a PlayerMoneyStore (D-03)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 02-02-PLAN.md — HUDController singleton (D-01/D-02/D-04/D-05/D-06/D-07): Canvas por código, barra de borrachera con lerp, texto de dinero TMP + verificación en Play Mode
 
 ### Phase 3: Loop de victoria y derrota
 
@@ -114,7 +121,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Economía | 2/2 | Complete   | 2026-06-23 |
-| 2. HUD in-level | 0/? | Not started | - |
+| 2. HUD in-level | 0/2 | Not started | - |
 | 3. Loop de victoria y derrota | 0/? | Not started | - |
 | 4. Animaciones | 0/? | Not started | - |
 | 5. Efectos visuales y carga | 0/? | Not started | - |
