@@ -61,7 +61,7 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 02-01-PLAN.md — Wave 0 bloqueante: importar TMP Essential Resources + agregar OnMoneyChanged a PlayerMoneyStore (D-03)
+- [x] 02-01-PLAN.md — Wave 0 bloqueante: importar TMP Essential Resources + agregar OnMoneyChanged a PlayerMoneyStore (D-03)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -121,7 +121,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Economía | 2/2 | Complete   | 2026-06-23 |
-| 2. HUD in-level | 0/2 | Not started | - |
+| 2. HUD in-level | 1/2 | In Progress|  |
 | 3. Loop de victoria y derrota | 0/? | Not started | - |
 | 4. Animaciones | 0/? | Not started | - |
 | 5. Efectos visuales y carga | 0/? | Not started | - |
