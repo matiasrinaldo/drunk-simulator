@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Economía** - Objetos vendibles con valor, bebidas con precio, y el patrón Flyweight como modelo de datos compartido (completed 2026-06-23)
 - [x] **Phase 2: HUD in-level** - Barra de borrachera y contador de dinero siempre visibles durante el juego (completed 2026-06-24)
-- [ ] **Phase 3: Loop de victoria y derrota** - Detección de choque, condición de ganar vendiendo todo, y pantallas de resultado
+- [x] **Phase 3: Loop de victoria y derrota** - Detección de choque, condición de ganar vendiendo todo, y pantallas de resultado (completed 2026-06-24)
 - [ ] **Phase 4: Animaciones** - Animator state machine en un elemento principal y animación por código en otro
 - [ ] **Phase 5: Efectos visuales y carga** - Partículas, luces y escena dedicada de carga asincrónica
 
@@ -97,7 +97,7 @@ Plans:
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 03-04-PLAN.md — ResultScreenController: pantalla Victory/Defeat por código según UI-SPEC + botones Reintentar/Salir + loop completo verificado
+- [x] 03-04-PLAN.md — ResultScreenController: pantalla Victory/Defeat por código según UI-SPEC + botones Reintentar/Salir + loop completo verificado
 
 **UI hint**: yes
 
@@ -139,6 +139,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. Economía | 2/2 | Complete   | 2026-06-23 |
 | 2. HUD in-level | 2/2 | Complete   | 2026-06-24 |
-| 3. Loop de victoria y derrota | 3/4 | In Progress|  |
+| 3. Loop de victoria y derrota | 4/4 | Complete   | 2026-06-24 |
 | 4. Animaciones | 0/? | Not started | - |
 | 5. Efectos visuales y carga | 0/? | Not started | - |
