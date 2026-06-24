@@ -35,7 +35,7 @@ Requisitos del milestone actual. Cada uno mapea a una fase del roadmap.
 
 ### Animaciones (TP2.2)
 
-- [ ] **ANIM-01**: Animación por máquina de estados (Animator) en un elemento principal del juego
+- [x] **ANIM-01**: Animación por máquina de estados (Animator) en un elemento principal del juego
 - [x] **ANIM-02**: Animación por código en al menos un elemento del juego
 
 ### Efectos visuales (TP2.5, TP2.6)
@@ -87,7 +87,7 @@ Qué fases cubren qué requisitos. Se completa al crear el roadmap.
 | GAME-02 | Phase 3 | Complete |
 | GAME-03 | Phase 3 | Complete |
 | GAME-04 | Phase 3 | Complete |
-| ANIM-01 | Phase 4 | Pending |
+| ANIM-01 | Phase 4 | Complete |
 | ANIM-02 | Phase 4 | Complete |
 | FX-01 | Phase 5 | Pending |
 | FX-02 | Phase 5 | Pending |
