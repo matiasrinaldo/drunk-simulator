@@ -24,6 +24,10 @@ public class BarExitTrigger : MonoBehaviour
 
         triggered = true;
         PlayerSpawner.NextSpawnId = spawnId;
+        if (WorldTimeStore.SoldDuringCurrentBarVisit)
+        {
+            WorldTimeStore.SetNight();
+        }
         SceneManager.LoadSceneAsync(sceneToLoad);
     }
 }
