@@ -116,4 +116,28 @@ public class CarController : MonoBehaviour
             rb.AddTorque(transform.up * jitter, ForceMode.Force);
         }
     }
+
+    /// <summary>
+    /// Detecta colision con un obstaculo letal mientras el auto esta controlado (D-01/D-02/D-03).
+    /// Guard: si !isControlled, el jugador va a pie — no cuenta como derrota (D-02).
+    /// Al confirmar la colision: frena el auto, bloquea el control, notifica al GameManager.
+    /// </summary>
+    private void OnCollisionEnter(Collision collision)
+    {
+        // D-02: Solo cuenta si el jugador esta actualmente conduciendo.
+        if (!isControlled) return;
+
+        // D-01: Solo obstaculos marcados con LethalObstacle disparan la derrota.
+        LethalObstacle obstacle = collision.gameObject.GetComponent<LethalObstacle>();
+        if (obstacle == null) return;
+
+        // D-03: Frenar el auto antes de disparar la transicion de escena.
+        rb.linearVelocity  = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        SetControlled(false);
+
+        // Notificar al GameManager (patron FindFirstObjectByType con null-check).
+        var gm = FindFirstObjectByType<GameManager>();
+        if (gm != null) gm.OnCarCrash();
+    }
 }

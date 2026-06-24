@@ -196,6 +196,10 @@ public static class CityBuilder
         go.transform.position     = pos;
         go.transform.rotation     = Quaternion.Euler(0f, yRot, 0f);
         go.transform.localScale   = Vector3.one * BuildingScale;
+
+        // Marca como obstaculo letal para la deteccion de derrota (D-01).
+        // La categoria default del enum (Casa) es correcta para edificios.
+        go.AddComponent<LethalObstacle>();
     }
 
     // ── Vegetation ─────────────────────────────────────────────────────────
@@ -237,6 +241,10 @@ public static class CityBuilder
 
         go.name               = $"Tree_{(side < 0 ? "W" : "E")}_{Mathf.RoundToInt(z)}";
         go.transform.position = new Vector3(xPos, 0f, z);
+
+        // Marca como obstaculo letal para la deteccion de derrota (D-01).
+        var lo = go.AddComponent<LethalObstacle>();
+        lo.SetCategory(ObstacleCategory.Arbol);
     }
 
     // ── Waypoints ──────────────────────────────────────────────────────────
