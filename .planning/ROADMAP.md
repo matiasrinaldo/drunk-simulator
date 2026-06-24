@@ -113,7 +113,16 @@ Plans:
   2. Al menos un elemento del juego se anima sin ningún AnimationClip — solo mediante código que modifica transform, material o propiedades de componente en Update/coroutine (p.ej. bob del objeto sostenido, pulso de la barra de borrachera, wobble de UI al quedar sin dinero)
   3. Ambas animaciones son visiblemente distinguibles en Play Mode sin necesidad de inspeccionarlas
 
-**Plans**: TBD
+**Plans**: 3 planes
+Plans:
+**Wave 1**
+
+- [x] 04-01-PLAN.md — Slice ANIM-02: animación por código del HUD (pulso de DrunkBar por EffectIntensity + wobble de MoneyText al rechazar compra) en HUDController + PlayerPickup
+- [x] 04-02-PLAN.md — Wave 0 ANIM-01: DoorAnimatorBuilder (Editor) genera Door.controller (Closed/Open + transición condicional) + DoorOpen.anim
+
+**Wave 2** *(blocked on 04-02)*
+
+- [ ] 04-03-PLAN.md — Slice ANIM-01: DoorProximityTrigger (sin cargar escena) + puerta decorativa en City con Animator + verificación Play Mode (checkpoint)
 
 ### Phase 5: Efectos visuales y carga
 
@@ -140,5 +149,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 1. Economía | 2/2 | Complete   | 2026-06-23 |
 | 2. HUD in-level | 2/2 | Complete   | 2026-06-24 |
 | 3. Loop de victoria y derrota | 4/4 | Complete   | 2026-06-24 |
-| 4. Animaciones | 0/? | Not started | - |
+| 4. Animaciones | 2/3 | In Progress|  |
 | 5. Efectos visuales y carga | 0/? | Not started | - |
