@@ -198,4 +198,13 @@ public class HUDController : MonoBehaviour
         if (drunkManager != null)
             drunkManager.OnAlcoholLevelChanged -= HandleAlcoholChanged;
     }
+
+    /// <summary>
+    /// Muestra u oculta el HUD. Usado por ResultScreenController al entrar a la escena Result
+    /// para que el HUD persistente no tape la pantalla de resultado (D-10, Pitfall 4).
+    /// </summary>
+    public static void SetVisible(bool visible)
+    {
+        if (instance != null) instance.gameObject.SetActive(visible);
+    }
 }

@@ -27,6 +27,9 @@ public static class DeliveredObjectsStore
         return takenIds.Contains(id);
     }
 
+    /// <summary>Cantidad de objetos tomados en esta partida.</summary>
+    public static int TakenCount => takenIds.Count;
+
     /// <summary>Olvida todo lo tomado (util al empezar una partida nueva).</summary>
     public static void Clear()
     {
