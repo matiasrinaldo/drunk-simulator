@@ -93,7 +93,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 03-03-PLAN.md — Slice Victoria end-to-end: HomeInitializer (captura total CarryableObject) + CityHomeDoorTrigger delegando a GameManager
+- [x] 03-03-PLAN.md — Slice Victoria end-to-end: HomeInitializer (captura total CarryableObject) + CityHomeDoorTrigger delegando a GameManager
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
@@ -139,6 +139,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. Economía | 2/2 | Complete   | 2026-06-23 |
 | 2. HUD in-level | 2/2 | Complete   | 2026-06-24 |
-| 3. Loop de victoria y derrota | 2/4 | In Progress|  |
+| 3. Loop de victoria y derrota | 3/4 | In Progress|  |
 | 4. Animaciones | 0/? | Not started | - |
 | 5. Efectos visuales y carga | 0/? | Not started | - |
