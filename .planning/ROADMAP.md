@@ -89,7 +89,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 03-02-PLAN.md — Slice Derrota end-to-end: GameManager (OnCarCrash + OnPlayerArrivedHome + NewGame) + CarController.OnCollisionEnter + CityBuilder con LethalObstacle + peatones en City
+- [x] 03-02-PLAN.md — Slice Derrota end-to-end: GameManager (OnCarCrash + OnPlayerArrivedHome + NewGame) + CarController.OnCollisionEnter + CityBuilder con LethalObstacle + peatones en City
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -139,6 +139,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. Economía | 2/2 | Complete   | 2026-06-23 |
 | 2. HUD in-level | 2/2 | Complete   | 2026-06-24 |
-| 3. Loop de victoria y derrota | 1/4 | In Progress|  |
+| 3. Loop de victoria y derrota | 2/4 | In Progress|  |
 | 4. Animaciones | 0/? | Not started | - |
 | 5. Efectos visuales y carga | 0/? | Not started | - |
