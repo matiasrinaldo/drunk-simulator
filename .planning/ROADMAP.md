@@ -85,7 +85,7 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 03-01-PLAN.md — Fundación: LethalObstacle + GameResultStore + HomeObjectsTotalStore + DeliveredObjectsStore.TakenCount + HUDController.SetVisible + escena Result en Build Settings (checkpoint)
+- [x] 03-01-PLAN.md — Fundación: LethalObstacle + GameResultStore + HomeObjectsTotalStore + DeliveredObjectsStore.TakenCount + HUDController.SetVisible + escena Result en Build Settings (checkpoint)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -139,6 +139,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. Economía | 2/2 | Complete   | 2026-06-23 |
 | 2. HUD in-level | 2/2 | Complete   | 2026-06-24 |
-| 3. Loop de victoria y derrota | 0/4 | Not started | - |
+| 3. Loop de victoria y derrota | 1/4 | In Progress|  |
 | 4. Animaciones | 0/? | Not started | - |
 | 5. Efectos visuales y carga | 0/? | Not started | - |

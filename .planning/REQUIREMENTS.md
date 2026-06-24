@@ -19,10 +19,10 @@ Requisitos del milestone actual. Cada uno mapea a una fase del roadmap.
 
 ### Estado de Juego
 
-- [ ] **GAME-01**: El jugador pierde al chocar contra casa, árbol, niño o mascota mientras maneja
-- [ ] **GAME-02**: El jugador gana cuando vendió todos los objetos de su casa habiendo alcanzado un nivel mínimo de borrachera
-- [ ] **GAME-03**: Se muestra un estado/pantalla de victoria al cumplir la condición de ganar
-- [ ] **GAME-04**: Se muestra un estado/pantalla de derrota al chocar
+- [x] **GAME-01**: El jugador pierde al chocar contra casa, árbol, niño o mascota mientras maneja
+- [x] **GAME-02**: El jugador gana cuando vendió todos los objetos de su casa habiendo alcanzado un nivel mínimo de borrachera
+- [x] **GAME-03**: Se muestra un estado/pantalla de victoria al cumplir la condición de ganar
+- [x] **GAME-04**: Se muestra un estado/pantalla de derrota al chocar
 
 ### HUD in-level (TP2.3)
 
@@ -83,10 +83,10 @@ Qué fases cubren qué requisitos. Se completa al crear el roadmap.
 | PAT-01 | Phase 1 | Complete |
 | HUD-01 | Phase 2 | Pending |
 | HUD-02 | Phase 2 | Pending |
-| GAME-01 | Phase 3 | Pending |
-| GAME-02 | Phase 3 | Pending |
-| GAME-03 | Phase 3 | Pending |
-| GAME-04 | Phase 3 | Pending |
+| GAME-01 | Phase 3 | Complete |
+| GAME-02 | Phase 3 | Complete |
+| GAME-03 | Phase 3 | Complete |
+| GAME-04 | Phase 3 | Complete |
 | ANIM-01 | Phase 4 | Pending |
 | ANIM-02 | Phase 4 | Pending |
 | FX-01 | Phase 5 | Pending |
