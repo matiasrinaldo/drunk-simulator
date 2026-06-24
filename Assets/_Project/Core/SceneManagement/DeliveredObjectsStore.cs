@@ -12,6 +12,7 @@ using System.Collections.Generic;
 public static class DeliveredObjectsStore
 {
     static readonly HashSet<string> takenIds = new HashSet<string>();
+    static readonly HashSet<string> soldIds = new HashSet<string>();
 
     /// <summary>Marca un objeto como ya tomado (no debe volver a aparecer).</summary>
     public static void MarkTaken(string id)
@@ -25,6 +26,20 @@ public static class DeliveredObjectsStore
     {
         if (string.IsNullOrEmpty(id)) return false;
         return takenIds.Contains(id);
+    }
+
+    /// <summary>Marca un objeto como vendido en el bar.</summary>
+    public static void MarkSold(string id)
+    {
+        if (string.IsNullOrEmpty(id)) return;
+        soldIds.Add(id);
+    }
+
+    /// <summary>Indica si el objeto ya fue vendido en el bar.</summary>
+    public static bool IsSold(string id)
+    {
+        if (string.IsNullOrEmpty(id)) return false;
+        return soldIds.Contains(id);
     }
 
     /// <summary>Cantidad de objetos tomados en esta partida.</summary>
@@ -43,6 +58,7 @@ public static class DeliveredObjectsStore
     public static void Clear()
     {
         takenIds.Clear();
+        soldIds.Clear();
         SoldCount = 0;
     }
 }

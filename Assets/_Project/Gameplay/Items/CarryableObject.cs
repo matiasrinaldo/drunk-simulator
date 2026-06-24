@@ -47,6 +47,12 @@ public class CarryableObject : MonoBehaviour
 
     void Awake()
     {
+        if (gameObject.scene.name == "Bar" && !string.IsNullOrEmpty(objectId))
+        {
+            SetupBarSoldDisplay();
+            return;
+        }
+
         // Si ya fue tomado en esta partida, no debe reaparecer al recargar la escena.
         if (DeliveredObjectsStore.IsTaken(StableId))
         {
@@ -68,6 +74,29 @@ public class CarryableObject : MonoBehaviour
                 material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
             }
         }
+    }
+
+    private void SetupBarSoldDisplay()
+    {
+        bool wasSold = DeliveredObjectsStore.IsSold(StableId);
+        if (!wasSold)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+
+        Collider[] colliders = GetComponentsInChildren<Collider>(includeInactive: true);
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            if (colliders[i] != null)
+            {
+                colliders[i].enabled = false;
+            }
+        }
+
+        renderers = GetComponentsInChildren<Renderer>(includeInactive: true);
+        propertyBlock = new MaterialPropertyBlock();
+        enabled = false;
     }
 
     public void SetHighlighted(bool highlighted)

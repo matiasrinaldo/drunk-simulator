@@ -75,6 +75,7 @@ public class SellCounter : MonoBehaviour
         // El objeto ya quedo marcado como entregado al agarrarlo (CarryableObject.OnPickedUp).
         // La venta solo acredita dinero y cuenta para la condicion de victoria (CR-02).
         DeliveredObjectsStore.IncrementSoldCount();
+        DeliveredObjectsStore.MarkSold(HeldObjectStore.HeldObjectId);
         WorldTimeStore.MarkSoldInBar();
 
         // Limpiar el objeto sostenido
