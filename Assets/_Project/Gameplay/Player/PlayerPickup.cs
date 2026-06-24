@@ -36,7 +36,6 @@ public class PlayerPickup : MonoBehaviour
     int heldMaxSips;
     int heldSips;
     bool hasHeldDrink;
-    SellCounter currentSellCounter;
 
     /// <summary>Delega a HeldObjectStore — persiste entre escenas.</summary>
     public bool HasHeldObject => HeldObjectStore.HasHeldObject;
@@ -97,11 +96,9 @@ public class PlayerPickup : MonoBehaviour
         if (rejectClip == null)
         {
             rejectClip = Resources.Load<AudioClip>("Audio/SFX/NoMoney");
-            if (rejectClip == null)
-            {
-                // Fallback al clip de pago existente si NoMoney.mp3 no esta disponible (D-10)
-                rejectClip = Resources.Load<AudioClip>("Audio/SFX/PayDrink");
-            }
+            // Sin fallback a PayDrink: si no hay clip de rechazo, la compra fallida
+            // queda en silencio. Reproducir el sonido de compra confundia al jugador
+            // (parecia una compra exitosa cuando en realidad faltaba plata).
         }
     }
 
@@ -121,11 +118,6 @@ public class PlayerPickup : MonoBehaviour
             if (hasHeldDrink)
             {
                 DrinkHeldItem();
-            }
-            else if (currentSellCounter != null && HeldObjectStore.HasHeldObject)
-            {
-                // Vender el objeto al mostrador del Bar (D-01)
-                currentSellCounter.TrySell();
             }
             else if (currentPickupItem != null)
             {
@@ -170,7 +162,6 @@ public class PlayerPickup : MonoBehaviour
     {
         currentPickupItem = null;
         currentCarryable = null;
-        currentSellCounter = null;
 
         if (mainCamera == null)
         {
@@ -185,11 +176,6 @@ public class PlayerPickup : MonoBehaviour
             if (currentPickupItem == null)
             {
                 currentCarryable = hit.collider.GetComponentInParent<CarryableObject>();
-            }
-            if (currentPickupItem == null && currentCarryable == null)
-            {
-                // Detectar mostrador de venta — mismo patron GetComponentInParent (Opcion A RESEARCH.md)
-                currentSellCounter = hit.collider.GetComponentInParent<SellCounter>();
             }
         }
 

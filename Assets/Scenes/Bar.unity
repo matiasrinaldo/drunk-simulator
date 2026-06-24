@@ -210,16 +210,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75904170a2175484c95295ffd8ab82a8, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickupItem
   definition: {fileID: 11400000, guid: b208f79bfcf3b4af9b4371d34fcdd92d, type: 2}
-  pickupType: 0
-  itemName: 
   infiniteSupply: 1
-  maxSips: 4
-  beerAlcoholPerSip: 1
-  cocktailAlcoholPerSip: 2
-  whiskyAlcoholPerSip: 3
   heldVisualPrefab: {fileID: 0}
   overrideHeldVisualScale: 0
   heldVisualScale: {x: 1, y: 1, z: 1}
@@ -561,6 +555,27 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4346221526652387769, guid: 82fbc19101ab80848a4b5fdb9ebbcf0b, type: 3}
+--- !u!65 &126855092
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 786579303}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2, y: 2.4, z: 3}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &130974636 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b36cbd116e46bba4da895647891309f1, type: 3}
@@ -729,6 +744,21 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -847959100913197703, guid: 3bcfecdbcb439674c88b5e5751cf7722, type: 3}
+--- !u!4 &219540831
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 786579303}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.9, y: 1, z: -8.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &225117034
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3200,6 +3230,24 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1455403097}
   m_SourcePrefab: {fileID: 100100000, guid: 747e36685c9b09a429ab2554328a5a93, type: 3}
+--- !u!1 &786579303
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 219540831}
+  - component: {fileID: 126855092}
+  - component: {fileID: 896233790}
+  m_Layer: 0
+  m_Name: MostradorVenta
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -3444,6 +3492,21 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -4890990073563579795, guid: 747e36685c9b09a429ab2554328a5a93, type: 3}
+--- !u!114 &896233790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 786579303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4deeb19730824ce0ab59937a3cf4c2e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sellClip: {fileID: 0}
+  sellVolume: 1
+  playerTag: player
 --- !u!1001 &902074497
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4268,16 +4331,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75904170a2175484c95295ffd8ab82a8, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickupItem
   definition: {fileID: 11400000, guid: 0ff2a813e985a4d799e0d7abaf2081c4, type: 2}
-  pickupType: 0
-  itemName: 
   infiniteSupply: 1
-  maxSips: 4
-  beerAlcoholPerSip: 1
-  cocktailAlcoholPerSip: 2
-  whiskyAlcoholPerSip: 3
   heldVisualPrefab: {fileID: 0}
   overrideHeldVisualScale: 0
   heldVisualScale: {x: 1, y: 1, z: 1}
@@ -4543,6 +4600,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DrunkManager
   maxLevel: 24
   effectExponent: 1.6
+  debugAddAlcoholKey: 103
+  debugAddAlcoholAmount: 1
   alcoholLevel: 0
 --- !u!114 &1179756861
 MonoBehaviour:
@@ -4566,6 +4625,14 @@ MonoBehaviour:
   showAimDot: 1
   aimDotSize: 4
   aimDotColor: {r: 1, g: 1, b: 1, a: 1}
+  drinkSipClip: {fileID: 0}
+  drinkSipVolume: 1
+  payDrinkClip: {fileID: 0}
+  payDrinkVolume: 1
+  rejectClip: {fileID: 0}
+  rejectVolume: 1
+  debugAddMoneyKey: 109
+  debugAddMoneyAmount: 50
 --- !u!1001 &1184116322
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5770,16 +5837,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75904170a2175484c95295ffd8ab82a8, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickupItem
   definition: {fileID: 11400000, guid: e58f8024f800a4138985d2a3b1e53dad, type: 2}
-  pickupType: 0
-  itemName: 
   infiniteSupply: 1
-  maxSips: 4
-  beerAlcoholPerSip: 1
-  cocktailAlcoholPerSip: 2
-  whiskyAlcoholPerSip: 3
   heldVisualPrefab: {fileID: 0}
   overrideHeldVisualScale: 0
   heldVisualScale: {x: 1, y: 1, z: 1}
@@ -7100,75 +7161,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1589497999}
   m_SourcePrefab: {fileID: 100100000, guid: 4d8870e326b443b4487c5502f8742d6a, type: 3}
---- !u!1 &786579303
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 219540831}
-  - component: {fileID: 126855092}
-  - component: {fileID: 896233790}
-  m_Layer: 0
-  m_Name: MostradorVenta
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &219540831
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 786579303}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.3, y: 0.2, z: -4.5}
-  m_LocalScale: {x: 1, y: 0.5, z: 0.5}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &126855092
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 786579303}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &896233790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 786579303}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4deeb19730824ce0ab59937a3cf4c2e6, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  sellClip: {fileID: 0}
-  sellVolume: 1
-  interactKey: 101
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
