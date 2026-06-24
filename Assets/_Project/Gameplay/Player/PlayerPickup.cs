@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerPickup : MonoBehaviour
@@ -21,6 +22,10 @@ public class PlayerPickup : MonoBehaviour
     [SerializeField] private AudioClip rejectClip;
     [SerializeField, Range(0f, 1f)] private float rejectVolume = 1f;
 
+    [Header("Drink Animation")]
+    [SerializeField] private Vector3 drinkMouthLocalPosition = new Vector3(-0.3f, 0.03f, -0.19f);
+    [SerializeField] private Vector3 drinkMouthLocalEuler = new Vector3(-50f, 8f, 20f);
+
     [Header("Debug")]
     [SerializeField] private KeyCode debugAddMoneyKey = KeyCode.M;
     [SerializeField] private int debugAddMoneyAmount = 50;
@@ -32,10 +37,15 @@ public class PlayerPickup : MonoBehaviour
     CarryableObject currentCarryable;
     CarryableObject lastHighlightedCarryable;
     GameObject currentHeldVisual;
+    const float DrinkRaiseDurationSeconds = 0.45f;
+    const float DrinkHoldDurationSeconds = 0.9f;
+    const float DrinkLowerDurationSeconds = 0.65f;
     int heldAlcoholPerSip;
     int heldMaxSips;
     int heldSips;
     bool hasHeldDrink;
+    bool isDrinkingSip;
+    Coroutine drinkAnimationRoutine;
 
     /// <summary>Delega a HeldObjectStore — persiste entre escenas.</summary>
     public bool HasHeldObject => HeldObjectStore.HasHeldObject;
@@ -246,6 +256,7 @@ public class PlayerPickup : MonoBehaviour
         if (item == null) return;
 
         item.SetHighlighted(false);
+        StopDrinkAnimation();
         Destroy(currentHeldVisual);
         currentHeldVisual = CreateHeldVisual(item);
         heldAlcoholPerSip = item.AlcoholPerSip;
@@ -265,7 +276,7 @@ public class PlayerPickup : MonoBehaviour
 
     void DrinkHeldItem()
     {
-        if (!hasHeldDrink) return;
+        if (!hasHeldDrink || isDrinkingSip) return;
 
         if (drunkManager != null)
         {
@@ -278,13 +289,69 @@ public class PlayerPickup : MonoBehaviour
         }
 
         heldSips++;
-        if (heldSips >= heldMaxSips)
+        bool consumedLastSip = heldSips >= heldMaxSips;
+        drinkAnimationRoutine = StartCoroutine(AnimateDrinkSip(currentHeldVisual, consumedLastSip));
+
+        if (!consumedLastSip) return;
+
+        heldSips = 0;
+        hasHeldDrink = false;
+    }
+
+    IEnumerator AnimateDrinkSip(GameObject visual, bool destroyAfterAnimation)
+    {
+        if (visual == null)
         {
-            Destroy(currentHeldVisual);
-            currentHeldVisual = null;
-            heldSips = 0;
-            hasHeldDrink = false;
+            isDrinkingSip = false;
+            yield break;
         }
+
+        isDrinkingSip = true;
+
+        Transform visualTransform = visual.transform;
+        Vector3 startPosition = visualTransform.localPosition;
+        Quaternion startRotation = visualTransform.localRotation;
+        Quaternion mouthRotation = Quaternion.Euler(drinkMouthLocalEuler);
+
+        yield return AnimateHeldDrinkPose(visualTransform, startPosition, startRotation, drinkMouthLocalPosition, mouthRotation, DrinkRaiseDurationSeconds);
+        yield return new WaitForSeconds(DrinkHoldDurationSeconds);
+        yield return AnimateHeldDrinkPose(visualTransform, drinkMouthLocalPosition, mouthRotation, startPosition, startRotation, DrinkLowerDurationSeconds);
+
+        if (destroyAfterAnimation && currentHeldVisual == visual)
+        {
+            Destroy(visual);
+            currentHeldVisual = null;
+        }
+
+        isDrinkingSip = false;
+        drinkAnimationRoutine = null;
+    }
+
+    IEnumerator AnimateHeldDrinkPose(
+        Transform visualTransform,
+        Vector3 fromPosition,
+        Quaternion fromRotation,
+        Vector3 toPosition,
+        Quaternion toRotation,
+        float duration)
+    {
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            if (visualTransform == null) yield break;
+
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            t = t * t * (3f - 2f * t);
+            visualTransform.localPosition = Vector3.Lerp(fromPosition, toPosition, t);
+            visualTransform.localRotation = Quaternion.Slerp(fromRotation, toRotation, t);
+            yield return null;
+        }
+
+        if (visualTransform == null) yield break;
+
+        visualTransform.localPosition = toPosition;
+        visualTransform.localRotation = toRotation;
     }
 
     GameObject CreateHeldVisual(PickupItem item)
@@ -313,6 +380,17 @@ public class PlayerPickup : MonoBehaviour
         }
 
         return clone;
+    }
+
+    void StopDrinkAnimation()
+    {
+        if (drinkAnimationRoutine != null)
+        {
+            StopCoroutine(drinkAnimationRoutine);
+            drinkAnimationRoutine = null;
+        }
+
+        isDrinkingSip = false;
     }
 
     Vector3 GetLocalScaleForWorldScale(Vector3 worldScale, Vector3 parentWorldScale)
