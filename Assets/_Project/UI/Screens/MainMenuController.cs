@@ -43,6 +43,7 @@ public class MainMenuController : MonoBehaviour
         HeldObjectStore.Clear();
         HomeObjectsTotalStore.Clear();
         GameResultStore.Clear();
+        WorldTimeStore.Clear();
         PlayerSpawner.NextSpawnId = null;
         SceneManager.LoadSceneAsync(homeSceneName);
     }

@@ -27,6 +27,7 @@ public class BarDoorTrigger : MonoBehaviour
         var car = FindFirstObjectByType<CarController>();
         if (car != null) CarStateStore.Save(car.transform);
 
+        WorldTimeStore.BeginBarVisit();
         SceneManager.LoadSceneAsync(sceneToLoad);
     }
 }

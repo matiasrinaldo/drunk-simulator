@@ -22,6 +22,7 @@ public class HomeDoorTrigger : MonoBehaviour
         if (!other.CompareTag(playerTag)) return;
 
         triggered = true;
+        WorldTimeStore.SetDay();
         SceneManager.LoadSceneAsync(sceneToLoad);
     }
 }

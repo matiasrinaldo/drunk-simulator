@@ -78,6 +78,7 @@ public class GameManager : MonoBehaviour
         HeldObjectStore.Clear();
         HomeObjectsTotalStore.Clear();
         GameResultStore.Clear();
+        WorldTimeStore.Clear();
         PlayerSpawner.NextSpawnId = null;
 
         Debug.Log("[GameManager] NewGame — todos los stores reseteados, cargando Home.");
