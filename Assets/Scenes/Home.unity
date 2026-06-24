@@ -1323,7 +1323,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 710bf97389a92ce43bbba2c80912ebfb, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarryableObject
   highlightColor: {r: 1, g: 0.9, b: 0.15, a: 1}
   objectId: home-obj-1
@@ -1921,6 +1921,50 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -3040058778021699392, guid: cc85ba92b37059541916de24367170af, type: 3}
+--- !u!1 &849049159
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 849049161}
+  - component: {fileID: 849049160}
+  m_Layer: 0
+  m_Name: GameInitializer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &849049160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 849049159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27dfdabbee85845699de45a0bce99464, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HomeInitializer
+--- !u!4 &849049161
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 849049159}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &884814307
 GameObject:
   m_ObjectHideFlags: 0
@@ -2326,7 +2370,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 710bf97389a92ce43bbba2c80912ebfb, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarryableObject
   highlightColor: {r: 1, g: 0.9, b: 0.15, a: 1}
   objectId: home-obj-2
@@ -2593,7 +2637,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 710bf97389a92ce43bbba2c80912ebfb, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarryableObject
   highlightColor: {r: 1, g: 0.9, b: 0.15, a: 1}
   objectId: home-obj-3
@@ -2662,7 +2706,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 710bf97389a92ce43bbba2c80912ebfb, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarryableObject
   highlightColor: {r: 1, g: 0.9, b: 0.15, a: 1}
   objectId: home-obj-4
@@ -4684,7 +4728,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 710bf97389a92ce43bbba2c80912ebfb, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarryableObject
   highlightColor: {r: 1, g: 0.9, b: 0.15, a: 1}
   objectId: home-obj-5
@@ -4852,7 +4896,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 710bf97389a92ce43bbba2c80912ebfb, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarryableObject
   highlightColor: {r: 1, g: 0.9, b: 0.15, a: 1}
   objectId: home-obj-6
@@ -5032,3 +5076,4 @@ SceneRoots:
   - {fileID: 1806814956}
   - {fileID: 2087978524}
   - {fileID: 442915283}
+  - {fileID: 849049161}
