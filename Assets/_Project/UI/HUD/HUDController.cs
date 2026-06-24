@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,15 +11,23 @@ using UnityEngine.UI;
 /// (lerp hacia DrunkManager.EffectIntensity) e indicador de dinero TMP suscripto
 /// al evento de cambio de saldo de PlayerMoneyStore. Se re-vincula al DrunkManager
 /// activo en cada carga de escena.
+/// Fase 4 (ANIM-02): pulso senoidal de DrunkBar por EffectIntensity y wobble
+/// one-shot de MoneyText al rechazar una compra por falta de dinero.
 /// </summary>
 public class HUDController : MonoBehaviour
 {
     private static HUDController instance;
 
-    private DrunkManager drunkManager;   // DrunkManager de la escena activa
-    private float targetFillAmount;      // valor objetivo del lerp de la barra (0->1)
-    private Image fillImage;             // fill de la barra (Image.type = Filled)
-    private TMP_Text moneyText;          // texto de dinero (TextMeshProUGUI)
+    private DrunkManager drunkManager;       // DrunkManager de la escena activa
+    private float targetFillAmount;          // valor objetivo del lerp de la barra (0->1)
+    private Image fillImage;                 // fill de la barra (Image.type = Filled)
+    private TMP_Text moneyText;              // texto de dinero (TextMeshProUGUI)
+
+    // ANIM-02 Token A: referencia al contenedor de la barra para el pulso senoidal.
+    private RectTransform drunkBarRect;
+
+    // ANIM-02 Token B: handle de coroutine unico para el wobble de MoneyText.
+    private Coroutine moneyWobbleRoutine;
 
     /// <summary>Crea el HUD una sola vez antes de cargar la primera escena (D-01).</summary>
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -97,14 +106,20 @@ public class HUDController : MonoBehaviour
         moneyShadow.effectColor = Color.black;
 
         // Barra de borrachera (base del grupo, sobre el margen inferior de 24px).
+        // Pivot (0.5, 0.5) para que el pulso senoidal (ANIM-02 Token A) escale desde
+        // el centro de la barra y se vea simetrico. Se compensa anchoredPosition a
+        // (110, 10) = mitad de sizeDelta para que la posicion visual no cambie.
         GameObject barObject = new GameObject("DrunkBar", typeof(RectTransform));
-        RectTransform barRect = barObject.GetComponent<RectTransform>();
-        barRect.SetParent(groupRect, false);
-        barRect.anchorMin = Vector2.zero;
-        barRect.anchorMax = Vector2.zero;
-        barRect.pivot = Vector2.zero;
-        barRect.anchoredPosition = Vector2.zero;
-        barRect.sizeDelta = new Vector2(220f, 20f);
+        drunkBarRect = barObject.GetComponent<RectTransform>();
+        drunkBarRect.SetParent(groupRect, false);
+        drunkBarRect.anchorMin = Vector2.zero;
+        drunkBarRect.anchorMax = Vector2.zero;
+        drunkBarRect.pivot = new Vector2(0.5f, 0.5f);
+        drunkBarRect.anchoredPosition = new Vector2(110f, 10f);
+        drunkBarRect.sizeDelta = new Vector2(220f, 20f);
+
+        // Alias local para mantener compatibilidad con el resto del metodo BuildHUD.
+        RectTransform barRect = drunkBarRect;
 
         // Track (fondo de la barra).
         GameObject trackObject = new GameObject("Track", typeof(RectTransform));
@@ -187,13 +202,103 @@ public class HUDController : MonoBehaviour
     private void Update()
     {
         if (fillImage == null) return;
+
+        // Lerp existente del fill (no tocar — ANIM-02 Landmine).
         fillImage.fillAmount = Mathf.Lerp(fillImage.fillAmount, targetFillAmount, 3f * Time.deltaTime);
-        
-        // Snapping para que llegue a 100% (WR-05)
+
+        // Snapping para que llegue al 100% exacto (WR-05).
         if (Mathf.Abs(fillImage.fillAmount - targetFillAmount) < 0.001f)
         {
             fillImage.fillAmount = targetFillAmount;
         }
+
+        // ANIM-02 Token A: pulso senoidal de DrunkBar.localScale por EffectIntensity.
+        // Opera sobre el contenedor DrunkBar (pivot centrado), NUNCA sobre fillAmount ni Fill.
+        if (drunkBarRect != null)
+        {
+            float k = drunkManager != null ? drunkManager.EffectIntensity : 0f;
+
+            if (k <= 0.05f)
+            {
+                // Sobrio: barra exactamente quieta, sin jitter.
+                drunkBarRect.localScale = Vector3.one;
+            }
+            else
+            {
+                // Amplitud y frecuencia escaladas por intensidad del alcohol.
+                float amp = Mathf.Lerp(0f, 0.08f, k);
+                float f   = Mathf.Lerp(0f, 1.8f,  k);
+                float s   = 1f + Mathf.Sin(Time.time * f * 2f * Mathf.PI) * amp;
+                drunkBarRect.localScale = new Vector3(s, s, 1f);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Dispara el wobble one-shot de MoneyText (ANIM-02 Token B).
+    /// Llamado desde PlayerPickup cuando se rechaza una compra por falta de dinero.
+    /// Molde de SetVisible: accessor estatico que delega a la instancia.
+    /// </summary>
+    public static void FlashMoneyRejected()
+    {
+        if (instance != null) instance.StartMoneyWobble();
+    }
+
+    /// <summary>
+    /// Inicia (o reinicia) el coroutine de wobble de MoneyText.
+    /// Handle unico: si ya corre, se frena y se re-snapea antes de reiniciar
+    /// para no apilar offsets (UI-SPEC "Re-trigger: restart, do not stack offsets").
+    /// </summary>
+    private void StartMoneyWobble()
+    {
+        if (moneyText == null) return;
+
+        if (moneyWobbleRoutine != null)
+        {
+            StopCoroutine(moneyWobbleRoutine);
+            // Re-snap antes de reiniciar para evitar drift acumulado.
+            moneyText.rectTransform.anchoredPosition = new Vector2(0f, 28f);
+            moneyText.color = Color.white;
+            moneyWobbleRoutine = null;
+        }
+
+        moneyWobbleRoutine = StartCoroutine(MoneyWobbleRoutine());
+    }
+
+    /// <summary>
+    /// Coroutine del wobble de MoneyText (ANIM-02 Token B).
+    /// Amplitud 6px, 12 Hz, duracion 0.30s, envolvente de decaimiento lineal.
+    /// Snap final garantizado para evitar drift tras rechazos repetidos.
+    /// Color opcional: blanco -> rojo destructivo (#D64545) -> blanco.
+    /// </summary>
+    private IEnumerator MoneyWobbleRoutine()
+    {
+        const float duracion   = 0.30f;
+        const float frecuencia = 12f;
+        const float amplitud   = 6f;
+        const float baseX      = 0f;
+        Color colorRojo = new Color(0.839f, 0.271f, 0.271f, 1f); // #D64545
+
+        float elapsed = 0f;
+        while (elapsed < duracion)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duracion);
+
+            // Posicion: seno a 12 Hz con envolvente de decaimiento lineal.
+            float offsetX = Mathf.Sin(elapsed * frecuencia * 2f * Mathf.PI) * amplitud * (1f - t);
+            moneyText.rectTransform.anchoredPosition = new Vector2(baseX + offsetX, 28f);
+
+            // Flash de color: blanco -> rojo -> blanco (opcional, primer tercio rojo).
+            moneyText.color = Color.Lerp(colorRojo, Color.white, t);
+
+            yield return null;
+        }
+
+        // Snap final garantizado: vuelve exactamente al origen sin drift.
+        moneyText.rectTransform.anchoredPosition = new Vector2(0f, 28f);
+        moneyText.color = Color.white;
+        moneyWobbleRoutine = null;
     }
 
     private void OnDestroy()

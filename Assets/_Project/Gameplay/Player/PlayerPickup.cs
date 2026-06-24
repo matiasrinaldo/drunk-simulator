@@ -138,6 +138,8 @@ public class PlayerPickup : MonoBehaviour
                     // SFX de rechazo si no hay plata suficiente (D-10)
                     if (rejectClip != null && sfxSource != null)
                         sfxSource.PlayOneShot(rejectClip, Mathf.Clamp01(rejectVolume));
+                    // Wobble visual de MoneyText (ANIM-02 Token B)
+                    HUDController.FlashMoneyRejected();
                     return;
                 }
                 PlayerMoneyStore.Spend(precio);
@@ -186,6 +188,10 @@ public class PlayerPickup : MonoBehaviour
             if (currentPickupItem == null)
             {
                 currentCarryable = hit.collider.GetComponentInParent<CarryableObject>();
+                if (currentCarryable != null && !currentCarryable.enabled)
+                {
+                    currentCarryable = null;
+                }
             }
         }
 
