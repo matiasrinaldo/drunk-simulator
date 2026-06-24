@@ -89,7 +89,7 @@ public static class CityBuilder
         var asphalt = GameObject.CreatePrimitive(PrimitiveType.Plane);
         asphalt.name = "Asphalt";
         asphalt.transform.SetParent(root.transform);
-        asphalt.transform.position = new Vector3(0f, 0.01f, 0f);
+        asphalt.transform.position = new Vector3(0f, 0f, 0f);
         asphalt.transform.localScale = new Vector3(
             RoadWidth / planeUnit,
             1f,
@@ -123,7 +123,7 @@ public static class CityBuilder
         var sw = GameObject.CreatePrimitive(PrimitiveType.Plane);
         sw.name = side < 0 ? "Sidewalk_West" : "Sidewalk_East";
         sw.transform.SetParent(parent);
-        sw.transform.position = new Vector3(xCenter, 0.005f, 0f);
+        sw.transform.position = new Vector3(xCenter, 0f, 0f);
         sw.transform.localScale = new Vector3(
             width / planeUnit,
             1f,
