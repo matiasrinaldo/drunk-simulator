@@ -22,6 +22,13 @@ public class DrunkManager : MonoBehaviour
 
     public event Action<int> OnAlcoholLevelChanged;
 
+    void Awake()
+    {
+        // Restaurar el nivel persistido para que la borrachera sea continua entre
+        // escenas (la escena se reconstruye en modo Single y resetearia el campo).
+        alcoholLevel = Mathf.Min(DrunkLevelStore.AlcoholLevel, maxLevel);
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(debugAddAlcoholKey))
@@ -35,6 +42,7 @@ public class DrunkManager : MonoBehaviour
         if (amount <= 0) return;
 
         alcoholLevel = Mathf.Min(alcoholLevel + amount, maxLevel);
+        DrunkLevelStore.Save(alcoholLevel);
         OnAlcoholLevelChanged?.Invoke(alcoholLevel);
     }
 
@@ -46,6 +54,7 @@ public class DrunkManager : MonoBehaviour
     public void ResetLevel()
     {
         alcoholLevel = 0;
+        DrunkLevelStore.Save(0);
         OnAlcoholLevelChanged?.Invoke(alcoholLevel);
     }
 }
