@@ -14,7 +14,7 @@ Partimos de un juego brownfield que ya tiene borrachera, pickup, auto con Comman
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Economía** - Objetos vendibles con valor, bebidas con precio, y el patrón Flyweight como modelo de datos compartido (completed 2026-06-23)
-- [ ] **Phase 2: HUD in-level** - Barra de borrachera y contador de dinero siempre visibles durante el juego
+- [x] **Phase 2: HUD in-level** - Barra de borrachera y contador de dinero siempre visibles durante el juego (completed 2026-06-24)
 - [ ] **Phase 3: Loop de victoria y derrota** - Detección de choque, condición de ganar vendiendo todo, y pantallas de resultado
 - [ ] **Phase 4: Animaciones** - Animator state machine en un elemento principal y animación por código en otro
 - [ ] **Phase 5: Efectos visuales y carga** - Partículas, luces y escena dedicada de carga asincrónica
@@ -65,7 +65,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 02-02-PLAN.md — HUDController singleton (D-01/D-02/D-04/D-05/D-06/D-07): Canvas por código, barra de borrachera con lerp, texto de dinero TMP + verificación en Play Mode
+- [x] 02-02-PLAN.md — HUDController singleton (D-01/D-02/D-04/D-05/D-06/D-07): Canvas por código, barra de borrachera con lerp, texto de dinero TMP + verificación en Play Mode
 
 ### Phase 3: Loop de victoria y derrota
 
@@ -121,7 +121,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Economía | 2/2 | Complete   | 2026-06-23 |
-| 2. HUD in-level | 1/2 | In Progress|  |
+| 2. HUD in-level | 2/2 | Complete   | 2026-06-24 |
 | 3. Loop de victoria y derrota | 0/? | Not started | - |
 | 4. Animaciones | 0/? | Not started | - |
 | 5. Efectos visuales y carga | 0/? | Not started | - |
