@@ -22,6 +22,10 @@ public class CarController : MonoBehaviour
     [Tooltip("Drift agregado al acelerador por la borrachera.")]
     [SerializeField] private float drunkThrottleDriftAmount = 0.2f;
     [SerializeField] private float drunkThrottleDriftFrequency = 0.5f;
+    [Tooltip("Multiplicador extra de aceleracion cuando la borrachera esta al maximo.")]
+    [SerializeField] private float drunkMaxThrustMultiplier = 3.2f;
+    [Tooltip("Multiplicador extra de velocidad maxima cuando la borrachera esta al maximo.")]
+    [SerializeField] private float drunkMaxSpeedMultiplier = 2.8f;
     [Tooltip("Torque random para que el auto trompee cuando esta muy borracho.")]
     [SerializeField] private float drunkYawJitterTorque = 800f;
     [SerializeField] private float drunkYawJitterFrequency = 1.3f;
@@ -130,11 +134,13 @@ public class CarController : MonoBehaviour
 
         float effectiveSteer = Mathf.Clamp(steerInput + steerDrift, -1f, 1f);
         float effectiveThrottle = Mathf.Clamp(throttleInput + throttleDrift, -1f, 1f);
+        float currentThrust = thrust * Mathf.Lerp(1f, drunkMaxThrustMultiplier, drunkAmount);
+        float currentMaxSpeed = maxSpeed * Mathf.Lerp(1f, drunkMaxSpeedMultiplier, drunkAmount);
 
         // Acelerar / frenar (reversa atenuada).
-        if (Mathf.Abs(effectiveThrottle) > 0.01f && rb.linearVelocity.magnitude < maxSpeed)
+        if (Mathf.Abs(effectiveThrottle) > 0.01f && rb.linearVelocity.magnitude < currentMaxSpeed)
         {
-            float force = effectiveThrottle >= 0f ? thrust : thrust * reverseMultiplier;
+            float force = effectiveThrottle >= 0f ? currentThrust : currentThrust * reverseMultiplier;
             rb.AddForce(transform.forward * (effectiveThrottle * force), ForceMode.Force);
         }
 
