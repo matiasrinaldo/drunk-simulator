@@ -69,17 +69,24 @@ public class HUDController : MonoBehaviour
         groupRect.pivot = Vector2.zero;
         groupRect.anchoredPosition = new Vector2(24f, 24f);
 
-        // Texto de dinero (arriba del grupo).
+        // Texto de dinero (arriba de la barra). Apilado hacia arriba desde el
+        // bottom-left del grupo: barra (20px) + gap sm (8px) = 28px de offset Y.
         GameObject moneyObject = new GameObject("MoneyText", typeof(RectTransform));
         RectTransform moneyRect = moneyObject.GetComponent<RectTransform>();
         moneyRect.SetParent(groupRect, false);
-        moneyRect.anchorMin = new Vector2(0f, 1f);
-        moneyRect.anchorMax = new Vector2(0f, 1f);
-        moneyRect.pivot = new Vector2(0f, 1f);
-        moneyRect.anchoredPosition = Vector2.zero;
+        moneyRect.anchorMin = Vector2.zero;
+        moneyRect.anchorMax = Vector2.zero;
+        moneyRect.pivot = Vector2.zero;
+        moneyRect.anchoredPosition = new Vector2(0f, 28f);
         moneyRect.sizeDelta = new Vector2(220f, 35f);
 
         moneyText = moneyObject.AddComponent<TextMeshProUGUI>();
+        // Asignar font explicitamente: el HUD se construye BeforeSceneLoad y TMP aun
+        // no resuelve su font por defecto, lo que deja el texto sin mesh. Rutas con
+        // fallback (patron del proyecto para Resources.Load).
+        TMP_FontAsset hudFont = Resources.Load<TMP_FontAsset>("Fonts & Materials/LiberationSans SDF")
+            ?? Resources.Load<TMP_FontAsset>("LiberationSans SDF");
+        if (hudFont != null) moneyText.font = hudFont;
         moneyText.text = "$0";
         moneyText.fontSize = 28f;
         moneyText.fontStyle = FontStyles.Bold;
@@ -90,14 +97,14 @@ public class HUDController : MonoBehaviour
         moneyShadow.effectDistance = new Vector2(1f, -1f);
         moneyShadow.effectColor = Color.black;
 
-        // Barra de borrachera (debajo del texto, gap sm = 8px).
+        // Barra de borrachera (base del grupo, sobre el margen inferior de 24px).
         GameObject barObject = new GameObject("DrunkBar", typeof(RectTransform));
         RectTransform barRect = barObject.GetComponent<RectTransform>();
         barRect.SetParent(groupRect, false);
         barRect.anchorMin = Vector2.zero;
         barRect.anchorMax = Vector2.zero;
         barRect.pivot = Vector2.zero;
-        barRect.anchoredPosition = new Vector2(0f, -43f);
+        barRect.anchoredPosition = Vector2.zero;
         barRect.sizeDelta = new Vector2(220f, 20f);
 
         // Track (fondo de la barra).
@@ -120,11 +127,26 @@ public class HUDController : MonoBehaviour
         fillRect.offsetMin = Vector2.zero;
         fillRect.offsetMax = Vector2.zero;
         fillImage = fillObject.AddComponent<Image>();
+        // Sprite solido 1x1: sin sprite, Image.type=Filled se ignora y el fill se ve
+        // siempre lleno. Un sprite permite que fillAmount recorte horizontalmente.
+        fillImage.sprite = CreateSolidSprite();
         fillImage.type = Image.Type.Filled;
         fillImage.fillMethod = Image.FillMethod.Horizontal;
         fillImage.fillOrigin = (int)Image.OriginHorizontal.Left;
         fillImage.fillAmount = 0f;
         fillImage.color = new Color(0.878f, 0.690f, 0.251f, 1f);
+    }
+
+    /// <summary>
+    /// Crea un sprite blanco 1x1 por codigo. Necesario para que un Image con
+    /// type=Filled respete fillAmount (sin sprite, el fill se ignora y se ve lleno).
+    /// </summary>
+    private static Sprite CreateSolidSprite()
+    {
+        Texture2D texture = new Texture2D(1, 1);
+        texture.SetPixel(0, 0, Color.white);
+        texture.Apply();
+        return Sprite.Create(texture, new Rect(0f, 0f, 1f, 1f), new Vector2(0.5f, 0.5f));
     }
 
     /// <summary>Re-vincula la barra al DrunkManager de la escena recien cargada (D-02).</summary>
@@ -138,18 +160,22 @@ public class HUDController : MonoBehaviour
         if (drunkManager != null)
         {
             drunkManager.OnAlcoholLevelChanged += HandleAlcoholChanged;
-            targetFillAmount = drunkManager.EffectIntensity;
+            targetFillAmount = drunkManager.NormalizedLevel;
         }
         // Si no hay DrunkManager, se mantiene targetFillAmount actual sin lanzar excepcion.
 
         Debug.Log($"[HUDController] Escena cargada: {scene.name}. DrunkManager {(drunkManager != null ? "encontrado" : "no encontrado")}.");
     }
 
-    /// <summary>Actualiza el objetivo de la barra cuando cambia el nivel de alcohol (D-04).</summary>
+    /// <summary>
+    /// Actualiza el objetivo de la barra cuando cambia el nivel de alcohol.
+    /// Usa NormalizedLevel (lineal) en vez de EffectIntensity: revisa D-04 para dar
+    /// feedback visible desde el primer trago (la curva no lineal subia <1% por trago).
+    /// </summary>
     private void HandleAlcoholChanged(int newLevel)
     {
         if (drunkManager == null) return;
-        targetFillAmount = drunkManager.EffectIntensity;
+        targetFillAmount = drunkManager.NormalizedLevel;
     }
 
     /// <summary>Actualiza el texto de dinero al instante cuando cambia el saldo (D-03).</summary>
