@@ -15,11 +15,9 @@ public class HomeInitializer : MonoBehaviour
 {
     void Awake()
     {
-        // Guard: el total ya fue capturado en una carga anterior de Home.
-        // El store estatico sobrevive recargas — no sobreescribir (Pitfall 5).
-        if (HomeObjectsTotalStore.Total > 0) return;
-
-        var objetos = FindObjectsByType<CarryableObject>(FindObjectsSortMode.None);
+        // Calculamos el total buscando tambien los inactivos (por si un CarryableObject.Awake()
+        // ya se desactivo a si mismo al cargar la escena tras un NewGame o re-entrada) (WR-04).
+        var objetos = FindObjectsByType<CarryableObject>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         int total = objetos.Length;
 
         HomeObjectsTotalStore.Set(total);

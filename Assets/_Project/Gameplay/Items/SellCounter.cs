@@ -1,9 +1,11 @@
 using UnityEngine;
 
 /// <summary>
-/// Mostrador de venta en el Bar. El jugador mira el mostrador y aprieta E
-/// para vender el objeto que tiene en mano. Requiere un Collider para que
-/// PlayerPickup pueda detectarlo via raycast (mismo patron que BarDoorTrigger).
+/// Mostrador de venta en el Bar. Funciona como zona automatica: cuando el jugador
+/// entra al trigger con un objeto en mano, se vende solo (no hace falta apuntar ni
+/// apretar nada). Requiere un Collider isTrigger lo bastante grande para que el
+/// jugador lo atraviese al acercarse (mismo patron de deteccion que BarDoorTrigger:
+/// OnTriggerEnter + CompareTag("player")).
 /// </summary>
 [RequireComponent(typeof(Collider))]
 public class SellCounter : MonoBehaviour
@@ -13,7 +15,7 @@ public class SellCounter : MonoBehaviour
     [SerializeField, Range(0f, 1f)] private float sellVolume = 1f;
 
     [Header("Config")]
-    [SerializeField] public KeyCode interactKey = KeyCode.E;
+    [SerializeField] private string playerTag = "player";
 
     AudioSource sfxSource;
 
@@ -46,8 +48,17 @@ public class SellCounter : MonoBehaviour
     }
 
     /// <summary>
-    /// Intenta vender el objeto que tiene el jugador en mano.
-    /// Llamado desde PlayerPickup.Update cuando el jugador aprieta E mirando el mostrador.
+    /// Vende automaticamente al entrar a la zona del mostrador con un objeto en mano.
+    /// TrySell ya limpia HeldObjectStore, asi que no se revende en el mismo ingreso.
+    /// </summary>
+    void OnTriggerEnter(Collider other)
+    {
+        if (!other.CompareTag(playerTag)) return;
+        TrySell();
+    }
+
+    /// <summary>
+    /// Intenta vender el objeto que tiene el jugador en mano. Si no hay objeto, no hace nada.
     /// </summary>
     public void TrySell()
     {
@@ -62,7 +73,8 @@ public class SellCounter : MonoBehaviour
         PlayerMoneyStore.Add(valor);
 
         // El objeto ya quedo marcado como entregado al agarrarlo (CarryableObject.OnPickedUp).
-        // La venta solo acredita dinero — unico punto de verdad del marcado en el pickup (CR-01).
+        // La venta solo acredita dinero y cuenta para la condicion de victoria (CR-02).
+        DeliveredObjectsStore.IncrementSoldCount();
 
         // Limpiar el objeto sostenido
         HeldObjectStore.Clear();

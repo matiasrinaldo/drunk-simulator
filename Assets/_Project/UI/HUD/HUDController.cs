@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -189,6 +188,12 @@ public class HUDController : MonoBehaviour
     {
         if (fillImage == null) return;
         fillImage.fillAmount = Mathf.Lerp(fillImage.fillAmount, targetFillAmount, 3f * Time.deltaTime);
+        
+        // Snapping para que llegue a 100% (WR-05)
+        if (Mathf.Abs(fillImage.fillAmount - targetFillAmount) < 0.001f)
+        {
+            fillImage.fillAmount = targetFillAmount;
+        }
     }
 
     private void OnDestroy()

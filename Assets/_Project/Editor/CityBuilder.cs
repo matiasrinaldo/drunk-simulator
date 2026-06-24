@@ -198,8 +198,17 @@ public static class CityBuilder
         go.transform.localScale   = Vector3.one * BuildingScale;
 
         // Marca como obstaculo letal para la deteccion de derrota (D-01).
-        // La categoria default del enum (Casa) es correcta para edificios.
-        go.AddComponent<LethalObstacle>();
+        // Solo edificios de relleno son letales; los destinos no (WR-02).
+        if (goName != "Bar" && goName != "Mercado" && goName != "Casa_Jugador")
+        {
+            go.AddComponent<LethalObstacle>();
+        }
+
+        // Asegurar que el objeto tenga collider (WR-03).
+        if (go.GetComponentInChildren<Collider>() == null)
+        {
+            go.AddComponent<BoxCollider>();
+        }
     }
 
     // ── Vegetation ─────────────────────────────────────────────────────────
@@ -245,6 +254,12 @@ public static class CityBuilder
         // Marca como obstaculo letal para la deteccion de derrota (D-01).
         var lo = go.AddComponent<LethalObstacle>();
         lo.SetCategory(ObstacleCategory.Arbol);
+
+        // Asegurar que el objeto tenga collider (WR-03).
+        if (go.GetComponentInChildren<Collider>() == null)
+        {
+            go.AddComponent<BoxCollider>();
+        }
     }
 
     // ── Waypoints ──────────────────────────────────────────────────────────

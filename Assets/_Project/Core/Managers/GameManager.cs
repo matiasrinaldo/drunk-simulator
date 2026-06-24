@@ -43,11 +43,11 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        bool allDelivered = DeliveredObjectsStore.TakenCount >= HomeObjectsTotalStore.Total;
+        bool allDelivered = DeliveredObjectsStore.SoldCount >= HomeObjectsTotalStore.Total;
         bool drunkEnough  = DrunkLevelStore.AlcoholLevel >= minAlcoholRequired;
 
         Debug.Log($"[GameManager] Evaluacion de victoria — " +
-                  $"entregados: {DeliveredObjectsStore.TakenCount}/{HomeObjectsTotalStore.Total}, " +
+                  $"vendidos: {DeliveredObjectsStore.SoldCount}/{HomeObjectsTotalStore.Total}, " +
                   $"alcohol: {DrunkLevelStore.AlcoholLevel}/{minAlcoholRequired}");
 
         if (allDelivered && drunkEnough)
@@ -69,7 +69,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public static void NewGame()
     {
-        // TODO: agregar HUDController.SetVisible(true) si fuera necesario al reiniciar.
+        // Restaurar el HUD oculto en Result (CR-01)
+        HUDController.SetVisible(true);
         CarStateStore.Clear();
         DeliveredObjectsStore.Clear();
         DrunkLevelStore.Clear();

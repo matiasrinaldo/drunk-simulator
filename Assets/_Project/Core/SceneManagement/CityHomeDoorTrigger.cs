@@ -26,8 +26,8 @@ public class CityHomeDoorTrigger : MonoBehaviour
         if (car != null) CarStateStore.Save(car.transform);
 
         // D-04: delegar al GameManager la decision de cargar Home o Result/Victory.
-        // triggered=true se setea aqui (despues de las guards) para evitar bloqueo
-        // del trigger si el GameManager no dispara ninguna transicion (Pitfall 3).
+        // triggered=true se setea para evitar disparos multiples si el jugador
+        // tiene multiples colliders o el async load tarda en destruir la escena (WR-01).
         var gm = FindFirstObjectByType<GameManager>();
         if (gm != null)
         {
@@ -37,7 +37,14 @@ public class CityHomeDoorTrigger : MonoBehaviour
         }
 
         // Fallback: comportamiento anterior si no hay GameManager en la escena.
-        triggered = true;
-        SceneManager.LoadSceneAsync(sceneToLoad);
+        if (Application.CanStreamedLevelBeLoaded(sceneToLoad))
+        {
+            triggered = true;
+            SceneManager.LoadSceneAsync(sceneToLoad);
+        }
+        else
+        {
+            Debug.LogError($"[CityHomeDoorTrigger] Fallback no puede cargar escena '{sceneToLoad}'.");
+        }
     }
 }

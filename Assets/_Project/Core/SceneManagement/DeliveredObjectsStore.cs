@@ -30,9 +30,19 @@ public static class DeliveredObjectsStore
     /// <summary>Cantidad de objetos tomados en esta partida.</summary>
     public static int TakenCount => takenIds.Count;
 
+    /// <summary>Cantidad de objetos realmente vendidos en el bar (CR-02).</summary>
+    public static int SoldCount { get; private set; }
+
+    /// <summary>Registra una venta exitosa en el bar.</summary>
+    public static void IncrementSoldCount()
+    {
+        SoldCount++;
+    }
+
     /// <summary>Olvida todo lo tomado (util al empezar una partida nueva).</summary>
     public static void Clear()
     {
         takenIds.Clear();
+        SoldCount = 0;
     }
 }
