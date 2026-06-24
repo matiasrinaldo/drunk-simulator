@@ -39,6 +39,20 @@ public class CarController : MonoBehaviour
     [SerializeField] private Vector3 rearLeftWheelLocalPosition = new Vector3(-0.9f, 0.12f, -0.85f);
     [SerializeField] private Vector3 rearRightWheelLocalPosition = new Vector3(0.9f, 0.12f, -0.85f);
 
+    [Header("Headlights")]
+    [SerializeField] private bool enableHeadlights = true;
+    [SerializeField] private Vector3 leftHeadlightLocalPosition = new Vector3(-0.38f, 0.42f, 1.28f);
+    [SerializeField] private Vector3 rightHeadlightLocalPosition = new Vector3(0.38f, 0.42f, 1.28f);
+    [SerializeField] private Vector3 centerHeadlightLocalPosition = new Vector3(0f, 0.55f, 1.35f);
+    [SerializeField] private Vector3 headlightLocalEuler = new Vector3(8f, 0f, 0f);
+    [SerializeField] private Color headlightColor = new Color(1f, 0.9f, 0.62f, 1f);
+    [SerializeField] private float headlightIntensity = 120f;
+    [SerializeField] private float headlightRange = 160f;
+    [SerializeField] private float headlightSpotAngle = 95f;
+    [SerializeField] private float centerHeadlightIntensity = 180f;
+    [SerializeField] private float centerHeadlightRange = 220f;
+    [SerializeField] private float centerHeadlightSpotAngle = 110f;
+
     private Rigidbody rb;
     private bool isControlled;
     private float throttleInput;
@@ -48,6 +62,7 @@ public class CarController : MonoBehaviour
     private ParticleSystem[] sparkParticles;
     private Material smokeMaterial;
     private Material sparkMaterial;
+    private Light[] headlights;
 
     public float CurrentSpeed => rb != null ? rb.linearVelocity.magnitude : 0f;
     public bool IsControlled => isControlled;
@@ -58,6 +73,7 @@ public class CarController : MonoBehaviour
         rb.centerOfMass = centerOfMassOffset;
         drunkManager = FindFirstObjectByType<DrunkManager>();
         CreateDrivingEffects();
+        CreateHeadlights();
     }
 
     void Start()
@@ -90,11 +106,13 @@ public class CarController : MonoBehaviour
             throttleInput = 0f;
             steerInput = 0f;
             UpdateDrivingEffects(0f, 0f);
+            UpdateHeadlights();
             return;
         }
 
         throttleInput = Input.GetAxis("Vertical");
         steerInput = Input.GetAxis("Horizontal");
+        UpdateHeadlights();
     }
 
     void FixedUpdate()
@@ -295,6 +313,50 @@ public class CarController : MonoBehaviour
         if (material.HasProperty("_Color")) material.SetColor("_Color", color);
 
         return material;
+    }
+
+    private void CreateHeadlights()
+    {
+        if (!enableHeadlights) return;
+
+        headlights = new[]
+        {
+            CreateHeadlight("Luz Delantera Izquierda", leftHeadlightLocalPosition, headlightIntensity, headlightRange, headlightSpotAngle),
+            CreateHeadlight("Luz Delantera Derecha", rightHeadlightLocalPosition, headlightIntensity, headlightRange, headlightSpotAngle),
+            CreateHeadlight("Luz Delantera Central Larga", centerHeadlightLocalPosition, centerHeadlightIntensity, centerHeadlightRange, centerHeadlightSpotAngle)
+        };
+        UpdateHeadlights();
+    }
+
+    private Light CreateHeadlight(string lightName, Vector3 localPosition, float intensity, float range, float spotAngle)
+    {
+        GameObject lightObject = new GameObject(lightName);
+        lightObject.transform.SetParent(transform, false);
+        lightObject.transform.localPosition = localPosition;
+        lightObject.transform.localRotation = Quaternion.Euler(headlightLocalEuler);
+
+        Light headlight = lightObject.AddComponent<Light>();
+        headlight.type = LightType.Spot;
+        headlight.color = headlightColor;
+        headlight.intensity = intensity;
+        headlight.range = range;
+        headlight.spotAngle = spotAngle;
+        headlight.shadows = LightShadows.Soft;
+        return headlight;
+    }
+
+    private void UpdateHeadlights()
+    {
+        if (headlights == null) return;
+
+        bool shouldEnable = WorldTimeStore.CurrentTimeOfDay == WorldTimeOfDay.Night;
+        for (int i = 0; i < headlights.Length; i++)
+        {
+            if (headlights[i] != null)
+            {
+                headlights[i].enabled = shouldEnable;
+            }
+        }
     }
 
     /// <summary>
