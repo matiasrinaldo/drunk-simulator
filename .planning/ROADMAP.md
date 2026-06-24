@@ -81,7 +81,24 @@ Plans:
   4. La pantalla de victoria es distinguible y muestra un mensaje de éxito; ofrece al menos una acción (reintentar o salir)
   5. En una partida normal sin chocar ni vender todo, ninguna pantalla de resultado aparece
 
-**Plans**: TBD
+**Plans**: 4 planes
+Plans:
+**Wave 1**
+
+- [ ] 03-01-PLAN.md — Fundación: LethalObstacle + GameResultStore + HomeObjectsTotalStore + DeliveredObjectsStore.TakenCount + HUDController.SetVisible + escena Result en Build Settings (checkpoint)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 03-02-PLAN.md — Slice Derrota end-to-end: GameManager (OnCarCrash + OnPlayerArrivedHome + NewGame) + CarController.OnCollisionEnter + CityBuilder con LethalObstacle + peatones en City
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 03-03-PLAN.md — Slice Victoria end-to-end: HomeInitializer (captura total CarryableObject) + CityHomeDoorTrigger delegando a GameManager
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
+- [ ] 03-04-PLAN.md — ResultScreenController: pantalla Victory/Defeat por código según UI-SPEC + botones Reintentar/Salir + loop completo verificado
+
 **UI hint**: yes
 
 ### Phase 4: Animaciones
@@ -122,6 +139,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. Economía | 2/2 | Complete   | 2026-06-23 |
 | 2. HUD in-level | 2/2 | Complete   | 2026-06-24 |
-| 3. Loop de victoria y derrota | 0/? | Not started | - |
+| 3. Loop de victoria y derrota | 0/4 | Not started | - |
 | 4. Animaciones | 0/? | Not started | - |
 | 5. Efectos visuales y carga | 0/? | Not started | - |
