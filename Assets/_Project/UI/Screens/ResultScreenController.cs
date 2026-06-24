@@ -60,7 +60,7 @@ public class ResultScreenController : MonoBehaviour
         string textoTitulo   = esVictoria ? "LLEGASTE A CASA" : "CHOCASTE";
         string textoMensaje  = esVictoria
             ? "Vendiste todo y llegaste sano. Por ahora."
-            : "El alcohol gano esta vez. Siempre hay otra.";
+            : "El alcohol ganó esta vez. Siempre hay otra.";
         string textoReintentar = esVictoria ? "Jugar de nuevo" : "Reintentar";
 
         // ── Font con fallback (patron HUDController) ──
